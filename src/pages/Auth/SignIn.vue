@@ -5,7 +5,8 @@ export default defineComponent({})
 </script>
 
 <template>
-  <div class="w-96 mx-auto mt-16 bg-gray-50 border border-gray-300 rounded-lg">
+  <div
+    class="w-96 mx-auto -mt-24 bg-gray-50 border border-gray-300 rounded-lg shadow-sm">
     <form class="flex flex-col items-stretch p-8 space-y-6">
       <h1 class="text-center text-2xl text-gray-800">Sign in</h1>
       <TextBox />
