@@ -4,8 +4,10 @@ import App from './App.vue'
 import { createPinia } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from './routes'
+import { registerLib } from './_lib'
 
-createApp(App)
+const app = createApp(App)
+app
   .use(
     createRouter({
       history: createWebHistory(),
@@ -14,3 +16,5 @@ createApp(App)
   )
   .use(createPinia())
   .mount('#app')
+
+registerLib(app)
