@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { api } from '../api'
 import { Instance } from '../types/instance'
 
-export const appStore = defineStore('app', {
+export const useAppStore = defineStore('app', {
   state() {
     return {
       name: '',
@@ -10,7 +10,7 @@ export const appStore = defineStore('app', {
     }
   },
   actions: {
-    async loadInstance() {
+    async load() {
       try {
         const instance = (await api.get('/instance')).data as Instance
 

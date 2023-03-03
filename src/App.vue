@@ -13,7 +13,8 @@ import { mapStores } from 'pinia'
 import { defineComponent } from 'vue'
 
 import AppHeader from './components/AppHeader.vue'
-import { appStore } from './stores/app'
+import { useAppStore } from './stores/app'
+import { useAuthStore } from './stores/auth'
 
 export default defineComponent({
   components: { AppHeader },
@@ -23,10 +24,11 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapStores(appStore),
+    ...mapStores(useAppStore, useAuthStore),
   },
   async created() {
-    await this.appStore.loadInstance()
+    await this.appStore.load()
+    await this.authStore.load()
     this.isLoading = false
   },
 })

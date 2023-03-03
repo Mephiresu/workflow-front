@@ -21,10 +21,8 @@
     </RouterLink>
 
     <div class="space-x-2 z-50">
-      <RouterLink
-        :to="{ name: 'auth' }"
-        class="text-sm text-gray-400 hover:underline"
-        >Log out</RouterLink
+      <a class="text-sm text-gray-400 hover:underline" @click.prevent="logout"
+        >Log out</a
       >
     </div>
   </div>
@@ -33,11 +31,17 @@
 <script lang="ts">
 import { mapStores } from 'pinia'
 import { defineComponent } from 'vue'
-import { appStore } from '../stores/app'
+import { useAppStore } from '../stores/app'
+import { useAuthStore } from '../stores/auth'
 
 export default defineComponent({
   computed: {
-    ...mapStores(appStore),
+    ...mapStores(useAppStore, useAuthStore),
+  },
+  methods: {
+    async logout() {
+      await this.authStore.logout()
+    },
   },
 })
 </script>
