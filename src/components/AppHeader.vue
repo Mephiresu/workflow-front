@@ -20,8 +20,17 @@
       >
     </RouterLink>
 
-    <div class="space-x-2 z-50">
-      <a class="text-sm text-gray-400 hover:underline" @click.prevent="logout"
+    <div
+      v-if="authStore.loggedIn"
+      class="space-x-4 z-50 flex flex-row justify-center items-center">
+      <RouterLink
+        :to="{ name: 'admin' }"
+        class="text-gray-400 hover:text-gray-500">
+        <i class="fas fa-gear fa-lg" />
+      </RouterLink>
+      <a
+        class="text-sm cursor-pointer text-gray-400 hover:text-gray-500 hover:underline"
+        @click.prevent="logout"
         >Log out</a
       >
     </div>

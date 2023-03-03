@@ -1,13 +1,35 @@
 <template>
   <button
-    type="submit"
-    class="p-2 w-1/2 m-auto text-base text-gray-50 bg-purple-500 rounded-lg hover:bg-purple-600 hover:shadow-md">
-    Log in
+    :type="type"
+    :disabled="disabled"
+    class="p-2 w-1/2 m-auto text-base text-gray-50 bg-purple-500 rounded-lg hover:bg-purple-600 hover:shadow-md"
+    @click="$emit('click')">
+    <slot></slot>
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
-export default defineComponent({})
+export default defineComponent({
+  name: 'AppButton',
+  props: {
+    disabled: {
+      type: Boolean,
+    },
+    variant: {
+      type: String as PropType<'primary' | 'secondary'>,
+      default: 'secondary',
+    },
+    size: {
+      type: String as PropType<'sm' | 'md' | 'lg'>,
+      default: 'md',
+    },
+    type: {
+      type: String as PropType<'button' | 'submit' | 'reset'>,
+      default: 'button',
+    },
+  },
+  emits: ['click'],
+})
 </script>

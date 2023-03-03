@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import TextBox from '../components/TextBox.vue'
+import TextBox from './TextBox.vue'
 import AppButton from './AppButton.vue'
 
 export function registerLib(app: App) {

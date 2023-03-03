@@ -1,4 +1,4 @@
-export interface User {
+export interface Me {
   readonly username: string
   readonly fullName: string
   readonly email: string
