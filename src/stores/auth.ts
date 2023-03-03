@@ -1,17 +1,15 @@
-import { AxiosError } from 'axios'
 import { defineStore } from 'pinia'
 import { api, clearToken, setToken } from '../api'
 import { TOKEN_KEY } from '../const'
 import { ApiError } from '../types/error'
 import { Me } from '../types/me'
 import { TokenResponse } from '../types/token-response'
-import { User } from '../types/user'
 
 export const useAuthStore = defineStore('auth', {
   state() {
     return {
       token: window.localStorage.getItem(TOKEN_KEY) as string | undefined,
-      me: undefined as Me | undefined,
+      user: undefined as Me | undefined,
       userDataTemp: {
         username: '',
         password: '',
@@ -31,8 +29,8 @@ export const useAuthStore = defineStore('auth', {
         }
         setToken(this.token)
 
-        const me = (await api.get<User>('/auth/me')).data
-        this.me = me
+        const user = (await api.get<Me>('/auth/me')).data
+        this.user = user
       } catch (error) {
         console.error(error)
         console.error('Cannot reach backend?')
@@ -42,21 +40,23 @@ export const useAuthStore = defineStore('auth', {
       window.localStorage.removeItem(TOKEN_KEY)
       clearToken()
       this.token = undefined
-      this.me = undefined
+      this.user = undefined
 
       await this.$router.push({ name: 'auth' })
     },
     async signIn(username: string, password: string) {
       try {
-        const { me, token } = (
+        const { user, token } = (
           await api.post<TokenResponse>('/auth/sign-in', {
             username,
             password,
           })
         ).data
 
-        this.me = me
-        this.token = token
+        this.$patch({
+          user,
+          token,
+        })
 
         localStorage.setItem(TOKEN_KEY, token)
         setToken(token)

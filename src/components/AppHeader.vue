@@ -25,14 +25,10 @@
       class="space-x-4 z-50 flex flex-row justify-center items-center">
       <RouterLink
         :to="{ name: 'admin' }"
-        class="text-gray-400 hover:text-gray-500">
+        class="text-gray-400 hover:text-gray-500 active:text-gray-600 transition-colors">
         <i class="fas fa-gear fa-lg" />
       </RouterLink>
-      <a
-        class="text-sm cursor-pointer text-gray-400 hover:text-gray-500 hover:underline"
-        @click.prevent="logout"
-        >Log out</a
-      >
+      <UserCard />
     </div>
   </div>
 </template>
@@ -42,15 +38,12 @@ import { mapStores } from 'pinia'
 import { defineComponent } from 'vue'
 import { useAppStore } from '../stores/app'
 import { useAuthStore } from '../stores/auth'
+import UserCard from './UserCard.vue'
 
 export default defineComponent({
+  components: { UserCard },
   computed: {
     ...mapStores(useAppStore, useAuthStore),
-  },
-  methods: {
-    async logout() {
-      await this.authStore.logout()
-    },
   },
 })
 </script>
