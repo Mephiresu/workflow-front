@@ -28,7 +28,7 @@
         class="text-gray-400 hover:text-gray-500 active:text-gray-600 transition-colors">
         <i class="fas fa-gear fa-lg" />
       </RouterLink>
-      <UserCard />
+      <UserMini />
     </div>
   </div>
 </template>
@@ -38,10 +38,10 @@ import { mapStores } from 'pinia'
 import { defineComponent } from 'vue'
 import { useAppStore } from '../stores/app'
 import { useAuthStore } from '../stores/auth'
-import UserCard from './UserCard.vue'
+import UserMini from './UserMini.vue'
 
 export default defineComponent({
-  components: { UserCard },
+  components: { UserMini },
   computed: {
     ...mapStores(useAppStore, useAuthStore),
   },
