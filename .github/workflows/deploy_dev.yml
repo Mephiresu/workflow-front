@@ -1,0 +1,28 @@
+name: Deploy Develop
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DEV }}
+          username: ${{ secrets.HOST_DEV_USER }}
+          key: ${{ secrets.HOST_DEV_PRIVATE_KEY }}
+          script_stop: true
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            cd ~/hoenn-workflow-web
+            git checkout develop
+            git pull -f origin develop
+            yarn
+            yarn build
