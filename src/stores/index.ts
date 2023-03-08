@@ -1,6 +1,9 @@
 import { createPinia } from 'pinia'
 import { markRaw } from 'vue'
 import { router } from '../router'
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore-next-line
 import { createToaster } from '@meforma/vue-toaster'
 
 export const store = createPinia()
