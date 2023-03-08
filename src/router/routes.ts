@@ -8,9 +8,11 @@ import ChangeOtp from '../pages/Auth/ChangeOtp.vue'
 import InstanceTab from '../pages/Admin/InstanceTab.vue'
 import UsersTab from '../pages/Admin/UsersTab.vue'
 import AccessManagementTab from '../pages/Admin/AccessManagementTab.vue'
+import SetupPage from '../pages/SetupPage.vue'
 
 export const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: HomePage },
+  { path: '/setup', name: 'setup', component: SetupPage },
   {
     path: '/auth',
     name: 'auth',
