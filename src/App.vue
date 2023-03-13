@@ -3,7 +3,7 @@
     <div v-if="isLoading">Loading...</div>
     <div v-else class="w-screen h-screen flex flex-col">
       <AppHeader />
-      <RouterView class="flex-1" />
+      <RouterView class="flex-1 overflow-auto" />
     </div>
   </div>
 </template>

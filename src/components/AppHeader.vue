@@ -24,7 +24,7 @@
       v-if="authStore.loggedIn"
       class="space-x-4 z-50 flex flex-row justify-center items-center">
       <RouterLink
-        :to="{ name: 'admin' }"
+        :to="{ name: 'settings' }"
         class="text-gray-400 hover:text-gray-500 active:text-gray-600 transition-colors">
         <i class="fas fa-gear fa-lg" />
       </RouterLink>
