@@ -56,8 +56,28 @@ export const useRolesSettingsStore = defineStore('rolesSettings', {
         this.$toaster.error(e as string)
       }
     },
-    create() {
-      console.log('create user')
+    async create(data: { name: string; isGlobal: boolean }) {
+      try {
+        const role = (
+          await api.post<Role>('/roles/', {
+            name: data.name,
+            isGlobal: data.isGlobal,
+          })
+        ).data
+
+        this.$router.push({ name: 'role', params: { roleId: role.id } })
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
+    async delete(roleId: number) {
+      try {
+        await api.delete(`/roles/${roleId}`)
+
+        this.$router.push({ name: 'roles' })
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
     },
   },
 })

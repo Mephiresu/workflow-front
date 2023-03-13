@@ -7,6 +7,9 @@
         class="border-purple-400 border ml-2 text-sm text-purple-400 font-light px-3 py-1 rounded-md"
         >Global</span
       >
+      <AppButton variant="secondary" class="ml-auto" @click="deleteRole"
+        >Delete</AppButton
+      >
     </div>
     <div>
       <div v-for="group in groups" :key="group.name" class="">
@@ -97,6 +100,9 @@ export default defineComponent({
         permission.name,
         permission.enabled
       )
+    },
+    async deleteRole() {
+      await this.rolesSettingsStore.delete(this.role!.id)
     },
   },
 })
