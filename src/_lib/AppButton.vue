@@ -2,7 +2,7 @@
   <button
     :type="type"
     :disabled="disabled"
-    class="m-auto text-base text-gray-50 rounded-lg hover:shadow-md"
+    class="text-base text-gray-50 rounded-lg hover:shadow-md"
     :class="{
       'bg-gray-100 hover:bg-gray-50 text-gray-700': variant === 'secondary',
       'bg-purple-500 hover:bg-purple-600 ': variant === 'primary',
