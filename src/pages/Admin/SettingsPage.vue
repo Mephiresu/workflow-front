@@ -23,12 +23,12 @@ export default defineComponent({
   data() {
     return {
       menu: [
-        { title: 'Instance', icon: 'house', path: '/admin/instance' },
-        { title: 'Users', icon: 'users', path: '/admin/users' },
+        { title: 'Instance', icon: 'house', path: '/settings/instance' },
+        { title: 'Users', icon: 'users', path: '/settings/users' },
         {
-          title: 'Access Management',
-          icon: 'key',
-          path: '/admin/access-management',
+          title: 'Roles',
+          icon: 'hammer',
+          path: '/settings/roles',
         },
       ],
     }
