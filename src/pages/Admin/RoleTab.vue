@@ -7,7 +7,11 @@
         class="border-purple-400 border ml-2 text-sm text-purple-400 font-light px-3 py-1 rounded-md"
         >Global</span
       >
-      <AppButton variant="secondary" class="ml-auto" @click="deleteRole"
+      <AppButton
+        variant="secondary"
+        class="ml-auto"
+        :disabled="role?.isImmutable"
+        @click="deleteRole"
         >Delete</AppButton
       >
     </div>
@@ -29,7 +33,9 @@
               }}</span>
             </div>
             <span>
-              <CheckBox :model-value="permission.enabled" />
+              <CheckBox
+                :model-value="permission.enabled"
+                :disabled="role?.isImmutable" />
             </span>
           </div>
         </div>
@@ -93,16 +99,24 @@ export default defineComponent({
       return value.charAt(0).toUpperCase() + value.slice(1)
     },
     async togglePermission(permission: Permission) {
+      if (!this.role || this.role.isImmutable) {
+        return
+      }
+
       permission.enabled = !permission.enabled
 
       await this.rolesSettingsStore.togglePermission(
-        this.role!.name,
+        this.role.name,
         permission.name,
         permission.enabled
       )
     },
     async deleteRole() {
-      await this.rolesSettingsStore.delete(this.role!.name)
+      if (!this.role) {
+        return
+      }
+
+      await this.rolesSettingsStore.delete(this.role.name)
     },
   },
 })

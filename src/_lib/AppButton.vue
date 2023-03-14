@@ -6,6 +6,7 @@
     :class="{
       'bg-gray-100 hover:bg-gray-50 text-gray-700': variant === 'secondary',
       'bg-purple-500 hover:bg-purple-600 ': variant === 'primary',
+      'bg-gray-300 text-gray-700 hover:bg-gray-300 hover:shadow-none': disabled,
       'text-sm p-1': size === 'sm',
       'text-base p-2': size === 'md',
     }"
