@@ -17,12 +17,12 @@ export const useRolesSettingsStore = defineStore('rolesSettings', {
         this.$toaster.error(e as string)
       }
     },
-    async getRoleWithPermissions(roleId: number) {
+    async getRoleWithPermissions(roleName: string) {
       try {
-        const role = (await api.get<Role>(`/roles/${roleId}`)).data
+        const role = (await api.get<Role>(`/roles/${roleName}`)).data
 
         const permissions = (
-          await api.get<Permission[]>(`/roles/${roleId}/permissions`)
+          await api.get<Permission[]>(`/roles/${roleName}/permissions`)
         ).data
 
         return {
@@ -35,7 +35,7 @@ export const useRolesSettingsStore = defineStore('rolesSettings', {
       }
     },
     async togglePermission(
-      roleId: number,
+      roleName: string,
       permissionName: string,
       enabled: boolean
     ) {
@@ -43,7 +43,7 @@ export const useRolesSettingsStore = defineStore('rolesSettings', {
         const payload = {
           permissionsNames: [permissionName],
         }
-        const url = `/roles/${roleId}/permissions`
+        const url = `/roles/${roleName}/permissions`
 
         if (enabled) {
           await api.put(url, payload)
@@ -65,14 +65,14 @@ export const useRolesSettingsStore = defineStore('rolesSettings', {
           })
         ).data
 
-        this.$router.push({ name: 'role', params: { roleId: role.id } })
+        this.$router.push({ name: 'role', params: { roleName: role.name } })
       } catch (e: unknown) {
         this.$toaster.error(e as string)
       }
     },
-    async delete(roleId: number) {
+    async delete(roleName: string) {
       try {
-        await api.delete(`/roles/${roleId}`)
+        await api.delete(`/roles/${roleName}`)
 
         this.$router.push({ name: 'roles' })
       } catch (e: unknown) {

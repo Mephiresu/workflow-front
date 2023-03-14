@@ -39,9 +39,9 @@
     <div class="divide-y divide-gray-300">
       <div
         v-for="role in rolesSettingsStore.roles"
-        :key="role.id"
+        :key="role.name"
         class="p-4 hover:bg-purple-200 active:bg-purple-300 cursor-pointer transition-colors"
-        @click="editRole(role.id)">
+        @click="editRole(role.name)">
         <div class="font-bold text-gray-800 flex items-center">
           {{ role.name }}
           <span
@@ -81,8 +81,8 @@ export default defineComponent({
     await this.rolesSettingsStore.load()
   },
   methods: {
-    editRole(roleId: number) {
-      this.$router.push({ name: 'role', params: { roleId } })
+    editRole(roleName: string) {
+      this.$router.push({ name: 'role', params: { roleName } })
     },
     async createRole() {
       await this.rolesSettingsStore.create(this.roleForm)

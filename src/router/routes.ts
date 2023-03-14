@@ -34,7 +34,7 @@ export const routes: RouteRecordRaw[] = [
       { path: 'instance', component: InstanceTab },
       { path: 'users', component: UsersTab },
       { path: 'roles', name: 'roles', component: RolesTab },
-      { path: 'roles/:roleId', name: 'role', component: RoleTab },
+      { path: 'roles/:roleName', name: 'role', component: RoleTab },
     ],
   },
 ]
