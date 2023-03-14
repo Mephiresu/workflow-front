@@ -62,7 +62,7 @@ export default defineComponent({
   },
   async mounted() {
     const data = await this.rolesSettingsStore.getRoleWithPermissions(
-      Number(this.$route.params.roleId)
+      this.$route.params.roleName as string
     )
     if (!data) {
       return
@@ -96,13 +96,13 @@ export default defineComponent({
       permission.enabled = !permission.enabled
 
       await this.rolesSettingsStore.togglePermission(
-        this.role!.id,
+        this.role!.name,
         permission.name,
         permission.enabled
       )
     },
     async deleteRole() {
-      await this.rolesSettingsStore.delete(this.role!.id)
+      await this.rolesSettingsStore.delete(this.role!.name)
     },
   },
 })
