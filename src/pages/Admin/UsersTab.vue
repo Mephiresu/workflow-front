@@ -1,36 +1,39 @@
 <template>
   <div>
     <ModalWindow
-        v-if="showCreateUserModal"
-        @close="showCreateUserModal = false">
-        <div
-          class="p-2 rounded-lg bg-white border border-gray-400 shadow-md w-1/3 min-w-max">
-          <form
+      v-if="showCreateUserModal"
+      @close="showCreateUserModal = false">
+      <div
+        class="p-2 rounded-lg bg-white border border-gray-400 shadow-md w-1/3 min-w-max">
+        <form
           class="flex flex-col items-stretch p-8 space-y-6"
           @submit.prevent="createUser">
-            <h1 class="text-center text-2xl text-gray-800">New user</h1>
-            <TextBox v-model="userForm.fullname" placeholder="User fullname" />
-            <TextBox v-model="userForm.email" placeholder="User email" />
-            <TextBox v-model="userForm.username" placeholder="User username" />
-            
-            <div class="flex flex-row justify-center space-x-6">
+          <h1 class="text-center text-2xl text-gray-800">New user</h1>
+          <TextBox v-model="userForm.fullname" placeholder="User fullname" />
+          <TextBox v-model="userForm.email" placeholder="User email" />
+          <TextBox v-model="userForm.username" placeholder="User username" />
+
+          <div class="flex flex-row justify-center space-x-6">
             <AppButton type="submit" variant="primary" class="w-32"
-            >Create</AppButton
+              >Create</AppButton
             >
             <AppButton
-            type="button"
-            variant="secondary"
-            class="w-32"
-            @click="showCreateUserModal = false"
-            >Cancel</AppButton
+              type="button"
+              variant="secondary"
+              class="w-32"
+              @click="showCreateUserModal = false"
+              >Cancel</AppButton
             >
-            </div>
-          </form>
+          </div>
+        </form>
       </div>
     </ModalWindow>
-    <div><AppButton class="w-32"
-      @click="showCreateUserModal = true">New user</AppButton></div>
-      <div class="divide-y divide-gray-300">
+    <div>
+      <AppButton class="w-32" @click="showCreateUserModal = true"
+        >New user</AppButton
+      >
+    </div>
+    <div class="divide-y divide-gray-300">
       <div
         v-for="user in usersSettingsStore.users"
         :key="user.fullName"

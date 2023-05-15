@@ -7,28 +7,25 @@ export const useUsersSettingsStore = defineStore('usersSettings', {
   }),
   actions: {
     async load() {
-        this.users = []
-        try {
+      this.users = []
+      try {
         const users = (await api.get<User[]>('/users')).data
         this.users = users
-      } catch (e: unknown){
+      } catch (e: unknown) {
         this.$toaster.error(e as string)
       }
     },
     async getUser(username: string) {
       try {
-          return (await api.get<User>(`/users/${username}`)).data 
-        } catch (e: unknown) {
-          this.$toaster.error(e as string)
-          this.$router.push({ name: 'settings' })
-        }
+        return (await api.get<User>(`/users/${username}`)).data
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+        this.$router.push({ name: 'settings' })
+      }
     },
-    async updateUser(
-      user: User,
-      changed: boolean
-    ) {
+    async updateUser(user: User, changed: boolean) {
       try {
-      const url = `/users/${user.username}`
+        const url = `/users/${user.username}`
 
         if (changed) {
           await api.put(url, user)
@@ -39,20 +36,20 @@ export const useUsersSettingsStore = defineStore('usersSettings', {
         this.$toaster.error(e as string)
       }
     },
-    async create(data: { fullname: string; email: string; username: string}) {
+    async create(data: { fullname: string; email: string; username: string }) {
       try {
-            const user = (
-              await api.post<User>('/users/', {
-                username: data.username,
-                email: data.email,
-                fullname: data.fullname,
-              })
-            ).data
-    
-            this.$router.push({ name: 'user', params: { userName: user.username } })
-          } catch (e: unknown) {
-            this.$toaster.error(e as string)
-          }
+        const user = (
+          await api.post<User>('/users/', {
+            username: data.username,
+            email: data.email,
+            fullname: data.fullname,
+          })
+        ).data
+
+        this.$router.push({ name: 'user', params: { userName: user.username } })
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
     },
     async delete(username: string) {
       try {
