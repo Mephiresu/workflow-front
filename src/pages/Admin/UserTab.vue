@@ -10,8 +10,14 @@
         >
       </div>
       <div>
-        <TextBox v-model="user?.fullName" placeholder="User fullname" />
-        <TextBox v-model="user?.email" placeholder="User email" />
+        <TextBox
+         v-model="user?.fullName" 
+         placeholder="User fullname" 
+         @click="changed = true"/>
+        <TextBox 
+        v-model="user?.email" 
+        placeholder="User email" 
+        @click="changed = true"/>
       </div>
       <div class="mb-4 flex flex-row items-center justify-end">
         <AppButton
@@ -60,6 +66,7 @@
             return
         }
 
+        this.changed = false;
         await this.usersSettingsStore.updateUser(
             this.user, 
             this.changed
