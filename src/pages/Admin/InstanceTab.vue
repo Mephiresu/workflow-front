@@ -3,8 +3,8 @@
     <SavePanel v-if="isModified" @save="save" @revert="reset" />
 
     <form class="w-full" @change="change">
-      <div class="grid gap-4 grid-cols-[1fr_3fr] items-center">
-        <div class="font-bold col-span-2">Instance</div>
+      <div class="grid grid-cols-[1fr_3fr] items-center gap-4">
+        <div class="col-span-2 font-bold">Instance</div>
         <label class="">Name</label>
         <TextBox v-model="form.instanceName" />
 

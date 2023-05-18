@@ -16,23 +16,16 @@ export const useProjectsStore = defineStore('projects', {
         this.$toaster.error(e as string)
       }
     },
-    // async getRoleWithPermissions(roleName: string) {
-    //   try {
-    //     const role = (await api.get<Role>(`/roles/${roleName}`)).data
+    async getProject(projectId: number) {
+      try {
+        const project = (await api.get<Project>(`/projects/${projectId}`)).data
 
-    //     const permissions = (
-    //       await api.get<Permission[]>(`/roles/${roleName}/permissions`)
-    //     ).data
-
-    //     return {
-    //       role,
-    //       permissions,
-    //     }
-    //   } catch (e: unknown) {
-    //     this.$toaster.error(e as string)
-    //     this.$router.push({ name: 'settings' })
-    //   }
-    // },
+        return project
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+        this.$router.push({ name: 'projects' })
+      }
+    },
     // async togglePermission(
     //   roleName: string,
     //   permissionName: string,

@@ -4,9 +4,9 @@
       v-if="showCreateRoleModal"
       @close="showCreateRoleModal = false">
       <div
-        class="p-2 rounded-lg bg-white border border-gray-400 shadow-md w-1/3 min-w-max">
+        class="w-1/3 min-w-max rounded-lg border border-gray-400 bg-white p-2 shadow-md">
         <form
-          class="flex flex-col items-stretch p-8 space-y-6"
+          class="flex flex-col items-stretch space-y-6 p-8"
           @submit.prevent="createRole">
           <h1 class="text-center text-2xl text-gray-800">New role</h1>
           <TextBox v-model="roleForm.name" placeholder="Role name" />
@@ -40,13 +40,13 @@
       <div
         v-for="role in rolesSettingsStore.roles"
         :key="role.name"
-        class="p-4 hover:bg-purple-200 active:bg-purple-300 cursor-pointer transition-colors"
+        class="cursor-pointer p-4 transition-colors hover:bg-purple-200 active:bg-purple-300"
         @click="editRole(role.name)">
-        <div class="font-bold text-gray-800 flex items-center">
+        <div class="flex items-center font-bold text-gray-800">
           {{ role.name }}
           <span
             v-if="role.isGlobal"
-            class="border-purple-400 border ml-2 text-sm text-purple-400 font-light px-2 rounded-md"
+            class="ml-2 rounded-md border border-purple-400 px-2 text-sm font-light text-purple-400"
             >Global</span
           >
         </div>

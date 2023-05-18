@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute z-50 inset-0 bg-black bg-opacity-50 flex flex-row items-center justify-center"
+    class="absolute inset-0 z-50 flex flex-row items-center justify-center bg-black bg-opacity-50"
     @click.self="$emit('close')">
     <slot></slot>
   </div>

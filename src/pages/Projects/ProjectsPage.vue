@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col p-8">
-    <h1 class="text-3xl font-bold mb-4">Projects</h1>
-    <div class="flex-1 max-w-md">
+    <h1 class="mb-4 text-3xl font-bold">Projects</h1>
+    <div class="max-w-md flex-1">
       <div class="space-y-2">
         <ProjectCard
           v-for="project in projectsStore.projects"
