@@ -10,6 +10,8 @@ import UsersTab from '../pages/Admin/UsersTab.vue'
 import SetupPage from '../pages/SetupPage.vue'
 import RolesTab from '../pages/Admin/RolesTab.vue'
 import RoleTab from '../pages/Admin/RoleTab.vue'
+import ProjectsPage from '../pages/Projects/ProjectsPage.vue'
+import ProjectPage from '../pages/Projects/ProjectPage.vue'
 
 export const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: HomePage },
@@ -36,5 +38,15 @@ export const routes: RouteRecordRaw[] = [
       { path: 'roles', name: 'roles', component: RolesTab },
       { path: 'roles/:roleName', name: 'role', component: RoleTab },
     ],
+  },
+  {
+    path: '/projects',
+    name: 'projects',
+    component: ProjectsPage,
+  },
+  {
+    path: '/projects/:projectId',
+    name: 'project',
+    component: ProjectPage,
   },
 ]
