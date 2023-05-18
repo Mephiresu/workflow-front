@@ -56,42 +56,18 @@ export const useProjectsStore = defineStore('projects', {
         this.$router.push({ name: 'projects' })
       }
     },
-    // async togglePermission(
-    //   roleName: string,
-    //   permissionName: string,
-    //   enabled: boolean
-    // ) {
-    //   try {
-    //     const payload = {
-    //       permissionsNames: [permissionName],
-    //     }
-    //     const url = `/roles/${roleName}/permissions`
+    async create(data: { name: string; description?: string }) {
+      try {
+        const project = (await api.post<Project>('/projects', data)).data
 
-    //     if (enabled) {
-    //       await api.put(url, payload)
-    //     } else {
-    //       await api.delete(url, {
-    //         data: payload,
-    //       })
-    //     }
-    //   } catch (e: unknown) {
-    //     this.$toaster.error(e as string)
-    //   }
-    // },
-    // async create(data: { name: string; isGlobal: boolean }) {
-    //   try {
-    //     const role = (
-    //       await api.post<Role>('/roles/', {
-    //         name: data.name,
-    //         isGlobal: data.isGlobal,
-    //       })
-    //     ).data
-
-    //     this.$router.push({ name: 'role', params: { roleName: role.name } })
-    //   } catch (e: unknown) {
-    //     this.$toaster.error(e as string)
-    //   }
-    // },
+        this.$router.push({
+          name: 'project',
+          params: { projectId: project.id },
+        })
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
     // async delete(roleName: string) {
     //   try {
     //     await api.delete(`/roles/${roleName}`)
