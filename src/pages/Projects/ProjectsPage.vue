@@ -30,7 +30,7 @@ export default defineComponent({
     ...mapStores(useProjectsStore),
   },
   async mounted() {
-    await this.projectsStore.load()
+    await this.projectsStore.loadProjects()
   },
 })
 </script>

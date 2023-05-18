@@ -1,13 +1,16 @@
 import { defineStore } from 'pinia'
 import { api } from '../../api'
 import { Project } from '../../types/project'
+import { BoardFull } from '../../types/board-full'
 
 export const useProjectsStore = defineStore('projects', {
   state: () => ({
     projects: [] as Project[],
+    project: undefined as Project | undefined,
+    board: undefined as BoardFull | undefined,
   }),
   actions: {
-    async load() {
+    async loadProjects() {
       try {
         const projects = (await api.get<Project[]>('/projects')).data
 
@@ -16,11 +19,38 @@ export const useProjectsStore = defineStore('projects', {
         this.$toaster.error(e as string)
       }
     },
-    async getProject(projectId: number) {
+    async loadProject(projectId: string) {
       try {
         const project = (await api.get<Project>(`/projects/${projectId}`)).data
 
-        return project
+        this.project = project
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+        this.$router.push({ name: 'projects' })
+      }
+    },
+    async loadBoard(boardId?: string) {
+      try {
+        if (!boardId) {
+          const defaultBoard = this.project?.boards.find((b) => b.isDefault)
+          if (!defaultBoard) {
+            return
+          }
+
+          boardId = defaultBoard.id.toString()
+        } else {
+          this.$router.push({
+            query: { ...this.$router.currentRoute.value.query, board: boardId },
+          })
+        }
+
+        const board = (
+          await api.get<BoardFull>(
+            `/projects/${this.project?.id}/boards/${boardId}`
+          )
+        ).data
+
+        this.board = board
       } catch (e: unknown) {
         this.$toaster.error(e as string)
         this.$router.push({ name: 'projects' })
