@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col p-8">
+  <div class="flex w-full flex-col p-8">
     <SavePanel v-if="isModified" @save="save" @revert="reset" />
 
     <div class="mb-6">
       <AppButton variant="danger" @click="deleteProject">Delete</AppButton>
     </div>
 
-    <div class="max-w-md flex-1">
+    <div class="mb-4 max-w-xl flex-1">
       <form class="w-full" @change="change" @submit.prevent="">
         <div class="grid grid-cols-[1fr_3fr] items-center gap-4">
           <div class="col-span-2 font-bold">General</div>
@@ -18,6 +18,66 @@
         </div>
       </form>
     </div>
+
+    <div v-if="board" class="max-w-xl flex-1">
+      <div class="w-full">
+        <div class="col-span-2 font-bold">Stages</div>
+        <draggable
+          v-model="board.stages"
+          group="test"
+          class="my-4 w-full divide-y divide-gray-300"
+          item-key="id"
+          @end="handleStageReorder">
+          <template #item="{ element }">
+            <div
+              :key="element.id"
+              class="group flex w-full flex-row items-center justify-between px-4 py-2 transition-all duration-300 hover:border-purple-300 hover:bg-purple-200">
+              {{ element.name }}
+              <div
+                class="h-6 w-6 rounded text-center text-transparent transition-colors group-hover:text-gray-400"
+                @click="deleteStage(element.id)">
+                <i
+                  class="fas fa-trash fa-sm transition-colors hover:text-red-500" />
+              </div>
+            </div>
+          </template>
+          <template #footer>
+            <div
+              class="w-full px-4 py-2 text-gray-400 transition-all duration-300 hover:border-purple-300 hover:bg-purple-200 hover:text-gray-600"
+              @click="showCreateStageModal = true">
+              <i class="fas fa-plus" /> Add stage
+            </div>
+          </template>
+        </draggable>
+      </div>
+    </div>
+
+    <ModalWindow
+      v-if="showCreateStageModal"
+      @close="showCreateStageModal = false">
+      <div
+        class="w-1/3 min-w-max rounded-lg border border-gray-400 bg-white p-2 shadow-md">
+        <form
+          class="flex flex-col items-stretch space-y-6 p-8"
+          @submit.prevent="createStage">
+          <h1 class="text-center text-2xl text-gray-800">New stage</h1>
+          <TextBox v-model="stageForm.name" placeholder="Stage name" />
+
+          <div class="flex flex-row justify-center space-x-6">
+            <AppButton type="submit" variant="primary" class="w-32"
+              >Create</AppButton
+            >
+            <AppButton
+              type="button"
+              variant="secondary"
+              class="w-32"
+              @click="showCreateStageModal = false"
+              >Cancel</AppButton
+            >
+          </div>
+        </form>
+      </div>
+    </ModalWindow>
   </div>
 </template>
 
@@ -28,23 +88,31 @@ import { useProjectsStore } from '../../stores/projects/projects'
 import { mapState } from 'pinia'
 
 import SavePanel from '../../components/SavePanel.vue'
+import ModalWindow from '../../components/ModalWindow.vue'
+import draggable from 'vuedraggable'
 
 export default defineComponent({
   components: {
     SavePanel,
+    ModalWindow,
+    draggable,
   },
   data() {
     return {
+      showCreateStageModal: false,
       isModified: false,
       form: {
         name: '',
         description: '',
       },
+      stageForm: {
+        name: '',
+      },
     }
   },
   computed: {
     ...mapStores(useProjectsStore),
-    ...mapState(useProjectsStore, ['project']),
+    ...mapState(useProjectsStore, ['project', 'board']),
   },
   mounted() {
     this.reset()
@@ -71,10 +139,36 @@ export default defineComponent({
 
       if (
         confirm(
-          `Are you sure you want to delete project ${this.project?.name}?`
+          `Are you sure you want to delete project "${this.project?.name}"?`
         )
       ) {
         this.projectsStore.delete(this.project.id)
+      }
+    },
+    deleteStage(stageId: number) {
+      if (!this.board) return
+
+      const stage = this.board.stages.find((s) => s.id === stageId)
+
+      if (!stage) return
+
+      if (confirm(`Are you sure you want to delete stage "${stage.name}"?`)) {
+        this.projectsStore.deleteStage(stageId)
+      }
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    handleStageReorder(e: any) {
+      console.log(`from ${e.oldIndex} to ${e.newIndex}`)
+    },
+    createStage() {
+      this.showCreateStageModal = false
+
+      this.projectsStore.createStage({
+        name: this.stageForm.name,
+      })
+
+      this.stageForm = {
+        name: '',
       }
     },
   },

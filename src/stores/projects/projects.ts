@@ -77,5 +77,35 @@ export const useProjectsStore = defineStore('projects', {
         this.$toaster.error(e as string)
       }
     },
+    async createStage(data: { name: string }) {
+      try {
+        if (!this.project || !this.board) return
+
+        const stage = (
+          await api.post<Project>(
+            `/projects/${this.project.id}/boards/${this.board.id}/stages`,
+            data
+          )
+        ).data
+
+        this.board.stages.push(stage)
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
+    async deleteStage(stageId: number) {
+      try {
+        if (!this.project || !this.board) return
+
+        await api.delete(
+          `/projects/${this.project.id}/boards/${this.board.id}/stages/${stageId}`
+        )
+
+        const index = this.board.stages.findIndex((s) => s.id === stageId)
+        this.board.stages.splice(index, 1)
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
   },
 })
