@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col p-8">
-    <h1 class="text-3xl font-bold mb-4">Settings</h1>
-    <div class="w-full p-4 space-x-6 border-b border-gray-300 mb-4">
+    <h1 class="mb-4 text-3xl font-bold">Settings</h1>
+    <div class="mb-4 w-full space-x-6 border-b border-gray-300 p-4">
       <RouterLink
         v-for="tab in menu"
         :key="tab.path"
         :to="tab.path"
         :active-class="'bg-purple-300 hover:bg-purple-400 text-gray-900'"
-        class="text-lg text-gray-600 px-5 py-2 rounded-md bg-gray-200 hover:bg-gray-100 transition-colors">
+        class="rounded-md bg-gray-200 px-5 py-2 text-lg text-gray-600 transition-colors hover:bg-gray-100">
         <i class="fas mr-1" :class="`fa-${tab.icon}`" />
         {{ tab.title }}
       </RouterLink>

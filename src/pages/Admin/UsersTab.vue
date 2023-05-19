@@ -4,9 +4,9 @@
       v-if="showCreateUserModal"
       @close="showCreateUserModal = false">
       <div
-        class="p-2 rounded-lg bg-white border border-gray-400 shadow-md w-1/3 min-w-max">
+        class="w-1/3 min-w-max rounded-lg border border-gray-400 bg-white p-2 shadow-md">
         <form
-          class="flex flex-col items-stretch p-8 space-y-6"
+          class="flex flex-col items-stretch space-y-6 p-8"
           @submit.prevent="createUser">
           <h1 class="text-center text-2xl text-gray-800">New user</h1>
           <TextBox v-model="userForm.fullName" placeholder="User fullname" />

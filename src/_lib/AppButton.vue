@@ -2,13 +2,14 @@
   <button
     :type="type"
     :disabled="disabled"
-    class="text-base text-gray-50 rounded-lg hover:shadow-md"
+    class="rounded-lg text-base text-gray-50 hover:shadow-md"
     :class="{
-      'bg-gray-100 hover:bg-gray-50 text-gray-700': variant === 'secondary',
+      'bg-gray-100 text-gray-700 hover:bg-gray-50': variant === 'secondary',
       'bg-purple-500 hover:bg-purple-600 ': variant === 'primary',
+      'bg-red-600 hover:bg-red-500': variant === 'danger',
       'bg-gray-300 text-gray-700 hover:bg-gray-300 hover:shadow-none': disabled,
-      'text-sm p-1': size === 'sm',
-      'text-base p-2': size === 'md',
+      'p-1 text-sm': size === 'sm',
+      'p-2 text-base': size === 'md',
     }"
     @click="$emit('click')">
     <slot></slot>
@@ -25,7 +26,7 @@ export default defineComponent({
       type: Boolean,
     },
     variant: {
-      type: String as PropType<'primary' | 'secondary'>,
+      type: String as PropType<'primary' | 'secondary' | 'danger'>,
       default: 'primary',
     },
     size: {

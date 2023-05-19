@@ -1,6 +1,5 @@
 import { type RouteRecordRaw } from 'vue-router'
 
-import HomePage from '../pages/HomePage.vue'
 import SignIn from '../pages/Auth/SignIn.vue'
 import AuthPage from '../pages/Auth/AuthPage.vue'
 import SettingsPage from '../pages/Admin/SettingsPage.vue'
@@ -10,9 +9,14 @@ import UsersTab from '../pages/Admin/UsersTab.vue'
 import SetupPage from '../pages/SetupPage.vue'
 import RolesTab from '../pages/Admin/RolesTab.vue'
 import RoleTab from '../pages/Admin/RoleTab.vue'
+import ProjectsPage from '../pages/Projects/ProjectsPage.vue'
+import ProjectPage from '../pages/Projects/ProjectPage.vue'
+import ProjectSettingsPage from '../pages/Projects/ProjectSettingsPage.vue'
+import NewProjectPage from '../pages/Projects/NewProjectPage.vue'
+import BoardPage from '../pages/Projects/BoardPage.vue'
 
 export const routes: RouteRecordRaw[] = [
-  { path: '/', name: 'home', component: HomePage },
+  { path: '/', name: 'home', redirect: '/projects' },
   { path: '/setup', name: 'setup', component: SetupPage },
   {
     path: '/auth',
@@ -35,6 +39,29 @@ export const routes: RouteRecordRaw[] = [
       { path: 'users', component: UsersTab },
       { path: 'roles', name: 'roles', component: RolesTab },
       { path: 'roles/:roleName', name: 'role', component: RoleTab },
+    ],
+  },
+  {
+    path: '/projects',
+    name: 'projects',
+    component: ProjectsPage,
+  },
+  {
+    path: '/projects/new',
+    name: 'new-project',
+    component: NewProjectPage,
+  },
+  {
+    path: '/projects/:projectId',
+    name: 'project',
+    component: ProjectPage,
+    children: [
+      { path: '', name: 'project-board', component: BoardPage },
+      {
+        path: 'settings',
+        name: 'project-settings',
+        component: ProjectSettingsPage,
+      },
     ],
   },
 ]

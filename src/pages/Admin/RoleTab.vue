@@ -4,7 +4,7 @@
       <span class="text-xl font-bold">{{ role?.name }}</span>
       <span
         v-if="role?.isGlobal"
-        class="border-purple-400 border ml-2 text-sm text-purple-400 font-light px-3 py-1 rounded-md"
+        class="ml-2 rounded-md border border-purple-400 px-3 py-1 text-sm font-light text-purple-400"
         >Global</span
       >
       <AppButton
@@ -17,18 +17,18 @@
     </div>
     <div>
       <div v-for="group in groups" :key="group.name" class="">
-        <div class="font-bold mt-3">
+        <div class="mt-3 font-bold">
           {{ capitalizeFirstLetter(group.name) }}
         </div>
         <div class="divide-y divide-gray-300">
           <div
             v-for="permission in group.permissions"
             :key="permission.name"
-            class="p-2 pl-6 hover:bg-purple-200 active:bg-purple-300 flex flex-row items-center justify-between transition-colors"
+            class="flex flex-row items-center justify-between p-2 pl-6 transition-colors hover:bg-purple-200 active:bg-purple-300"
             @click="togglePermission(permission)">
             <div>
               <span>{{ permission.description }}</span>
-              <span class="ml-4 font-light text-sm text-gray-500">{{
+              <span class="ml-4 text-sm font-light text-gray-500">{{
                 permission.operation
               }}</span>
             </div>
