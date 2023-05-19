@@ -9,7 +9,7 @@
           class="flex flex-col items-stretch p-8 space-y-6"
           @submit.prevent="createUser">
           <h1 class="text-center text-2xl text-gray-800">New user</h1>
-          <TextBox v-model="userForm.fullname" placeholder="User fullname" />
+          <TextBox v-model="userForm.fullName" placeholder="User fullname" />
           <TextBox v-model="userForm.email" placeholder="User email" />
           <TextBox v-model="userForm.username" placeholder="User username" />
 
@@ -62,7 +62,7 @@ export default defineComponent({
   data: () => ({
     showCreateUserModal: false,
     userForm: {
-      fullname: '',
+      fullName: '',
       email: '',
       username: '',
     },
