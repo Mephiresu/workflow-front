@@ -1,11 +1,11 @@
 <template>
   <div
-    class="w-96 mx-auto -mt-24 bg-gray-50 border border-gray-300 rounded-lg shadow-sm">
+    class="mx-auto -mt-24 w-96 rounded-lg border border-gray-300 bg-gray-50 shadow-sm">
     <form
-      class="flex flex-col items-stretch p-8 space-y-6"
+      class="flex flex-col items-stretch space-y-6 p-8"
       @submit.prevent="changeOtp">
       <h1 class="text-center text-2xl text-gray-800">Change password</h1>
-      <h1 class="text-center text-md text-gray-500">
+      <h1 class="text-md text-center text-gray-500">
         You are required to change your one-time password
       </h1>
       <TextBox
