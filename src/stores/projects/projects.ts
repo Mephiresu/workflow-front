@@ -68,14 +68,14 @@ export const useProjectsStore = defineStore('projects', {
         this.$toaster.error(e as string)
       }
     },
-    // async delete(roleName: string) {
-    //   try {
-    //     await api.delete(`/roles/${roleName}`)
+    async delete(projectId: number) {
+      try {
+        await api.delete(`/projects/${projectId}`)
 
-    //     this.$router.push({ name: 'roles' })
-    //   } catch (e: unknown) {
-    //     this.$toaster.error(e as string)
-    //   }
-    // },
+        this.$router.push({ name: 'projects' })
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
   },
 })

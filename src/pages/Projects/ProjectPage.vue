@@ -16,15 +16,23 @@
         {{ project.name }}
       </h1>
       <div class="flex w-48 flex-row-reverse px-4">
-        <div
-          class="rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 active:text-gray-600">
+        <RouterLink
+          :to="
+            $route.name !== 'project-settings'
+              ? `/projects/${project.id}/settings`
+              : `/projects/${project.id}`
+          "
+          class="block rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 active:text-gray-600"
+          :class="{
+            'bg-gray-100 text-gray-600': $route.name === 'project-settings',
+          }">
           <i class="fas fa-sliders fa-lg" />
-        </div>
+        </RouterLink>
       </div>
     </div>
 
     <div class="flex-grow">
-      <BoardPage />
+      <RouterView />
     </div>
 
     <ModalWindow v-if="showBoardsSelector" @close="showBoardsSelector = false">

@@ -13,7 +13,9 @@
         </div>
         <div class="mt-6 space-x-4">
           <AppButton type="submit">Create</AppButton>
-          <AppButton variant="secondary">Back</AppButton>
+          <AppButton variant="secondary" @click="$router.back()"
+            >Back</AppButton
+          >
         </div>
       </form>
     </div>

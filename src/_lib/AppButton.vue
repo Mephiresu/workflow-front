@@ -6,6 +6,7 @@
     :class="{
       'bg-gray-100 text-gray-700 hover:bg-gray-50': variant === 'secondary',
       'bg-purple-500 hover:bg-purple-600 ': variant === 'primary',
+      'bg-red-600 hover:bg-red-500': variant === 'danger',
       'bg-gray-300 text-gray-700 hover:bg-gray-300 hover:shadow-none': disabled,
       'p-1 text-sm': size === 'sm',
       'p-2 text-base': size === 'md',
@@ -25,7 +26,7 @@ export default defineComponent({
       type: Boolean,
     },
     variant: {
-      type: String as PropType<'primary' | 'secondary'>,
+      type: String as PropType<'primary' | 'secondary' | 'danger'>,
       default: 'primary',
     },
     size: {
