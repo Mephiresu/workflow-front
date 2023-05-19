@@ -29,7 +29,7 @@
       </div>
     </ModalWindow>
     <div>
-      <AppButton class="w-32 mb-4" @click="showCreateUserModal = true"
+      <AppButton class="mb-4 w-32" @click="showCreateUserModal = true"
         >New user</AppButton
       >
     </div>
