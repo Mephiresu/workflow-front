@@ -42,7 +42,7 @@ export const useUsersSettingsStore = defineStore('usersSettings', {
           await api.post<User>('/users/', {
             username: data.username,
             email: data.email,
-            fullname: data.fullName,
+            fullName: data.fullName,
           })
         ).data
 
