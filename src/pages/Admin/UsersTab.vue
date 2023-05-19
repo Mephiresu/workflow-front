@@ -9,7 +9,7 @@
           class="flex flex-col items-stretch space-y-6 p-8"
           @submit.prevent="createUser">
           <h1 class="text-center text-2xl text-gray-800">New user</h1>
-          <TextBox v-model="userForm.fullname" placeholder="User fullname" />
+          <TextBox v-model="userForm.fullName" placeholder="User fullname" />
           <TextBox v-model="userForm.email" placeholder="User email" />
           <TextBox v-model="userForm.username" placeholder="User username" />
 
@@ -29,7 +29,7 @@
       </div>
     </ModalWindow>
     <div>
-      <AppButton class="w-32" @click="showCreateUserModal = true"
+      <AppButton class="w-32 mb-4" @click="showCreateUserModal = true"
         >New user</AppButton
       >
     </div>
@@ -37,12 +37,12 @@
       <div
         v-for="user in usersSettingsStore.users"
         :key="user.fullName"
-        class="cursor-pointer p-4 transition-colors hover:bg-purple-200 active:bg-purple-300"
-        @click="editUser(user.fullName)">
-        <div class="flex items-center font-bold text-gray-800">
+        class="p-4 hover:bg-purple-200 active:bg-purple-300 cursor-pointer transition-colors "
+        @click="editUser(user.username)">
+        <div class="font-bold text-gray-800">
           {{ user.username }}
         </div>
-        <div class="flex justify-around text-sm font-light text-gray-700">
+        <div class="text-sm font-light text-gray-700">
           {{ user.fullName }} {{ user.email }}
         </div>
       </div>
@@ -62,9 +62,9 @@ export default defineComponent({
   data: () => ({
     showCreateUserModal: false,
     userForm: {
-      fullname: '',
-      email: '',
       username: '',
+      email: '',
+      fullName: '',
     },
   }),
   computed: {

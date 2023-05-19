@@ -36,13 +36,13 @@ export const useUsersSettingsStore = defineStore('usersSettings', {
         this.$toaster.error(e as string)
       }
     },
-    async create(data: { fullname: string; email: string; username: string }) {
+    async create(data: { fullName: string; email: string; username: string }) {
       try {
         const user = (
           await api.post<User>('/users/', {
             username: data.username,
             email: data.email,
-            fullname: data.fullname,
+            fullname: data.fullName,
           })
         ).data
 
