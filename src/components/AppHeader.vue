@@ -1,31 +1,31 @@
 <template>
   <div
-    class="w-full h-16 bg-gray-100 border-b border-gray-300 flex flex-row justify-between items-center p-4 relative">
+    class="relative flex h-16 w-full flex-row items-center justify-between border-b border-gray-300 bg-gray-100 p-4">
     <div
-      class="absolute inset-0 flex flex-row justify-center items-center -z-100">
-      <span class="text-2xl text-gray-800 font-extralight mr-2">{{
+      class="-z-100 absolute inset-0 flex flex-row items-center justify-center">
+      <span class="mr-2 text-2xl font-extralight text-gray-800">{{
         appStore.name
       }}</span>
     </div>
 
     <RouterLink
       :to="{ name: 'home' }"
-      class="flex flex-row text-3xl group z-50">
+      class="group z-50 flex flex-row text-3xl">
       <span
-        class="font-bold group-hover:underline decoration-4 group-hover:text-purple-800 transition-all transform duration-300"
+        class="transform font-bold decoration-4 transition-all duration-300 group-hover:text-purple-800 group-hover:underline"
         >Work</span
       ><span
-        class="group-hover:translate-x-4 transform transition-transform duration-300 delay-100"
+        class="transform transition-transform delay-100 duration-300 group-hover:translate-x-4"
         >flow</span
       >
     </RouterLink>
 
     <div
       v-if="authStore.loggedIn"
-      class="space-x-4 z-50 flex flex-row justify-center items-center">
+      class="z-50 flex flex-row items-center justify-center space-x-4">
       <RouterLink
         :to="{ name: 'settings' }"
-        class="text-gray-400 hover:text-gray-500 active:text-gray-600 transition-colors">
+        class="text-gray-400 transition-colors hover:text-gray-500 active:text-gray-600">
         <i class="fas fa-gear fa-lg" />
       </RouterLink>
       <UserMini />

@@ -2,14 +2,14 @@
   <div class="flex flex-col content-center items-center justify-center">
     <div
       v-if="stage === 0"
-      class="w-2/5 mx-auto -mt-24 bg-gray-50 border border-gray-300 rounded-lg shadow-sm">
+      class="mx-auto -mt-24 w-2/5 rounded-lg border border-gray-300 bg-gray-50 shadow-sm">
       <form
-        class="flex flex-col items-stretch p-8 space-y-6"
+        class="flex flex-col items-stretch space-y-6 p-8"
         @submit.prevent="createInstance">
         <h1 class="text-center text-2xl text-gray-800">
           Set up your organization
         </h1>
-        <p class="text-gray-600 text-center">
+        <p class="text-center text-gray-600">
           Enter public information about your organization.
         </p>
         <TextBox v-model="name" placeholder="Company name" />
@@ -22,24 +22,24 @@
     </div>
     <div
       v-if="stage === 1"
-      class="w-2/5 mx-auto -mt-24 bg-gray-50 border border-gray-300 rounded-lg shadow-sm">
+      class="mx-auto -mt-24 w-2/5 rounded-lg border border-gray-300 bg-gray-50 shadow-sm">
       <form
-        class="flex flex-col items-stretch p-8 space-y-6"
+        class="flex flex-col items-stretch space-y-6 p-8"
         @submit.prevent="proceed">
         <h1 class="text-center text-2xl text-gray-800">
           Administrator account
         </h1>
-        <p class="text-gray-600 text-center">
+        <p class="text-center text-gray-600">
           Organization has been set up. Here are your system administrator
           credentials:
         </p>
-        <div class="grid grid-cols-3 px-8 py-4 border-y border-gray-300">
+        <div class="grid grid-cols-3 border-y border-gray-300 px-8 py-4">
           <div>Username:</div>
-          <span class="font-bold col-span-2">{{
+          <span class="col-span-2 font-bold">{{
             appStore.createdInstance?.administrator.username
           }}</span>
           <div>Email:</div>
-          <span class="font-bold col-span-2">{{
+          <span class="col-span-2 font-bold">{{
             appStore.createdInstance?.administrator.email
           }}</span>
         </div>

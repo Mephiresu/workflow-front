@@ -4,9 +4,9 @@
       v-if="showCreateUserModal"
       @close="showCreateUserModal = false">
       <div
-        class="p-2 rounded-lg bg-white border border-gray-400 shadow-md w-1/3 min-w-max">
+        class="w-1/3 min-w-max rounded-lg border border-gray-400 bg-white p-2 shadow-md">
         <form
-          class="flex flex-col items-stretch p-8 space-y-6"
+          class="flex flex-col items-stretch space-y-6 p-8"
           @submit.prevent="createUser">
           <h1 class="text-center text-2xl text-gray-800">New user</h1>
           <TextBox v-model="userForm.fullname" placeholder="User fullname" />
@@ -37,12 +37,12 @@
       <div
         v-for="user in usersSettingsStore.users"
         :key="user.fullName"
-        class="p-4 hover:bg-purple-200 active:bg-purple-300 cursor-pointer transition-colors"
+        class="cursor-pointer p-4 transition-colors hover:bg-purple-200 active:bg-purple-300"
         @click="editUser(user.fullName)">
-        <div class="font-bold text-gray-800 flex items-center">
+        <div class="flex items-center font-bold text-gray-800">
           {{ user.username }}
         </div>
-        <div class="text-sm font-light text-gray-700 flex justify-around">
+        <div class="flex justify-around text-sm font-light text-gray-700">
           {{ user.fullName }} {{ user.email }}
         </div>
       </div>

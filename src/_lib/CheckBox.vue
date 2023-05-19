@@ -1,6 +1,6 @@
 <template>
   <input
-    class="block p-2 border border-gray-300 rounded outline-none focus:ring-purple-600 focus:ring-2 focus:border-transparent transition-colors duration-200"
+    class="block rounded border border-gray-300 p-2 outline-none transition-colors duration-200 focus:border-transparent focus:ring-2 focus:ring-purple-600"
     :class="{
       'text-gray-500 hover:text-gray-400': disabled,
       'text-purple-600 hover:text-purple-500 active:text-purple-400': !disabled,

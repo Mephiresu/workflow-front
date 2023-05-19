@@ -6,13 +6,13 @@
         >Delete</AppButton
       >
     </div>
-    <div>
+    <div v-if="user">
       <TextBox
-        v-model="user?.fullName"
+        v-model="user.fullName"
         placeholder="User fullname"
         @click="changed = true" />
       <TextBox
-        v-model="user?.email"
+        v-model="user.email"
         placeholder="User email"
         @click="changed = true" />
     </div>
