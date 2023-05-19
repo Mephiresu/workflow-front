@@ -29,7 +29,7 @@
       </div>
     </ModalWindow>
     <div>
-      <AppButton class="w-32" @click="showCreateUserModal = true"
+      <AppButton class="w-32 mb-4" @click="showCreateUserModal = true"
         >New user</AppButton
       >
     </div>
@@ -37,12 +37,12 @@
       <div
         v-for="user in usersSettingsStore.users"
         :key="user.fullName"
-        class="p-4 hover:bg-purple-200 active:bg-purple-300 cursor-pointer transition-colors"
-        @click="editUser(user.fullName)">
-        <div class="font-bold text-gray-800 flex items-center">
+        class="p-4 hover:bg-purple-200 active:bg-purple-300 cursor-pointer transition-colors "
+        @click="editUser(user.username)">
+        <div class="font-bold text-gray-800">
           {{ user.username }}
         </div>
-        <div class="text-sm font-light text-gray-700 flex justify-around">
+        <div class="text-sm font-light text-gray-700">
           {{ user.fullName }} {{ user.email }}
         </div>
       </div>
@@ -62,9 +62,9 @@ export default defineComponent({
   data: () => ({
     showCreateUserModal: false,
     userForm: {
-      fullName: '',
-      email: '',
       username: '',
+      email: '',
+      fullName: '',
     },
   }),
   computed: {
