@@ -1,7 +1,7 @@
 <template>
-  <div class="w-screen h-screen overflow-hidden bg-gray-200">
+  <div class="h-screen w-screen overflow-hidden bg-gray-200">
     <div v-if="isLoading">Loading...</div>
-    <div v-else class="w-screen h-screen flex flex-col">
+    <div v-else class="flex h-screen w-screen flex-col">
       <AppHeader />
       <RouterView class="flex-1 overflow-auto" />
     </div>
