@@ -6,6 +6,7 @@ import SettingsPage from '../pages/Admin/SettingsPage.vue'
 import ChangeOtp from '../pages/Auth/ChangeOtp.vue'
 import InstanceTab from '../pages/Admin/InstanceTab.vue'
 import UsersTab from '../pages/Admin/UsersTab.vue'
+import UserTab from '../pages/Admin/UserTab.vue'
 import SetupPage from '../pages/SetupPage.vue'
 import RolesTab from '../pages/Admin/RolesTab.vue'
 import RoleTab from '../pages/Admin/RoleTab.vue'
@@ -37,6 +38,7 @@ export const routes: RouteRecordRaw[] = [
     children: [
       { path: 'instance', component: InstanceTab },
       { path: 'users', component: UsersTab },
+      { path: 'users/:username', name: 'user', component: UserTab },
       { path: 'roles', name: 'roles', component: RolesTab },
       { path: 'roles/:roleName', name: 'role', component: RoleTab },
     ],
