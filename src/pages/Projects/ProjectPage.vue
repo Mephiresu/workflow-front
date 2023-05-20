@@ -49,11 +49,10 @@ import { mapStores } from 'pinia'
 import { useProjectsStore } from '../../stores/projects/projects'
 import BoardSelector from '../../components/BoardSelector.vue'
 import ModalWindow from '../../components/ModalWindow.vue'
-import BoardPage from './BoardPage.vue'
 import { mapState } from 'pinia'
 
 export default defineComponent({
-  components: { BoardSelector, ModalWindow, BoardPage },
+  components: { BoardSelector, ModalWindow },
   data() {
     return {
       showBoardsSelector: false,

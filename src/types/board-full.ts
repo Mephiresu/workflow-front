@@ -1,4 +1,5 @@
 import { Stage } from './stage'
+import { Task } from './task'
 
 export interface BoardFull {
   readonly id: number
@@ -6,4 +7,5 @@ export interface BoardFull {
   readonly createdAt: string
   readonly updatedAt: string
   readonly stages: Stage[]
+  readonly tasks: Task[]
 }
