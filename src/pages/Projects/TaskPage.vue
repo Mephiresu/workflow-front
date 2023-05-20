@@ -16,7 +16,7 @@
         @change="save" />
     </div>
     <div class="mt-4 flex flex-row justify-between">
-      <AppButton variant="danger" @click="projectsStore.deleteTask(task.id)"
+      <AppButton variant="danger" @click="projectsStore.deleteTask(task!.id)"
         >Delete</AppButton
       >
 
