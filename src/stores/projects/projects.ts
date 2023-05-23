@@ -136,6 +136,7 @@ export const useProjectsStore = defineStore('projects', {
             title: '',
             stageId,
             boardId: this.board.id,
+            projectId: this.project.id,
           })
         ).data
 
@@ -169,7 +170,7 @@ export const useProjectsStore = defineStore('projects', {
         this.$toaster.error(e as string)
       }
     },
-    async moveTask(taskId: number, toStageId: number) {
+    async moveTask(taskId: number, toStageId?: number, leadingTaskId?: number) {
       try {
         if (!this.project || !this.board) return
 
@@ -177,8 +178,9 @@ export const useProjectsStore = defineStore('projects', {
         if (!task) return
 
         const updated = (
-          await api.patch<Task>(`/tasks/${taskId}`, {
+          await api.patch<Task>(`/tasks/${taskId}/move`, {
             stageId: toStageId,
+            leadingTaskId,
           })
         ).data
       } catch (e: unknown) {

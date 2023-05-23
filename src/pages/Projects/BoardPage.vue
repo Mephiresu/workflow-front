@@ -16,7 +16,10 @@
             class="flex flex-col space-y-1 rounded-md bg-gray-50 p-2 shadow-sm hover:shadow-md"
             @click="projectsStore.openTask(element.id)">
             <div class="flex flex-row content-center space-x-2">
-              <span class="text-gray-900">{{ element.title }}</span>
+              <span class="text-gray-900"
+                >#{{ element.number }} [{{ element.index }}]
+                {{ element.title }}</span
+              >
             </div>
             <div class="text-gray-500">
               {{ element.description }}
@@ -80,11 +83,21 @@ export default defineComponent({
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async taskDrag(stageId: number, e: any) {
-      if (!e.added) return
+      if (!e.moved && !e.added) return
+      const data = e.added ?? e.moved
 
-      const taskId = e.added.element.id
+      const stage = this.stages.find((s) => s.id === stageId)
+      if (!stage || !stage.tasks) return
 
-      await this.projectsStore.moveTask(taskId, stageId)
+      const taskId = data.element.id
+      const taskIndex = data.newIndex
+
+      const leadingTaskId =
+        taskIndex > 0 ? stage.tasks[taskIndex - 1].id : undefined
+
+      const toStageId = e.added ? stageId : undefined
+
+      await this.projectsStore.moveTask(taskId, toStageId, leadingTaskId)
     },
   },
 })
