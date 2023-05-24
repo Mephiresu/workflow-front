@@ -5,29 +5,53 @@
     <div class="mr-4 flex flex-1 flex-col items-stretch">
       <div>
         <input
+          v-if="editing"
           v-model="task.title"
           type="text"
           class="w-full rounded border-none bg-gray-50 p-1 text-lg font-bold text-gray-800 outline-none hover:bg-gray-200 hover:ring-0 focus:ring-0 active:ring-0"
           @change="save" />
+        <div v-else class="w-full p-1 text-lg font-bold text-gray-800">
+          {{ task.title }}
+        </div>
       </div>
       <div class="flex-1">
         <textarea
+          v-if="editing"
           v-model="task.description"
           class="h-full w-full rounded border-none bg-gray-50 p-1 text-gray-800 outline-none hover:bg-gray-200 hover:ring-0 focus:ring-0 active:ring-0"
           @change="save" />
-      </div>
-      <div class="mt-4 flex flex-row justify-between">
-        <AppButton variant="danger" @click="tasksStore.deleteTask(task!.id)">
-          Delete
-        </AppButton>
-
-        <AppButton variant="secondary" @click="tasksStore.closeTask()">
-          Close
-        </AppButton>
+        <div
+          v-else
+          class="prose prose-sm h-full w-full p-1 text-gray-800"
+          v-html="descriptionMarkdown"></div>
       </div>
     </div>
 
     <div class="flex w-4/12 max-w-xs flex-col items-stretch space-y-2 pl-4">
+      <div class="mb-4">
+        <div
+          class="flex flex-row divide-x divide-gray-400 rounded border border-gray-400 text-gray-400">
+          <button
+            class="flex-1 p-1 hover:bg-gray-100 hover:text-gray-500 active:text-gray-600"
+            :class="{
+              'bg-purple-300 text-gray-500 hover:bg-purple-400 hover:text-gray-600 active:text-gray-700':
+                editing,
+            }"
+            @click="editing = !editing">
+            <i class="fas fa-pencil" />
+          </button>
+          <button
+            class="flex-1 p-1 hover:bg-gray-100 hover:text-gray-500 active:text-gray-600">
+            <i class="fas fa-tag" />
+          </button>
+          <button
+            class="flex-1 p-1 hover:bg-gray-100 hover:text-red-500 active:text-red-600"
+            @click="tasksStore.deleteTask(task!.id)">
+            <i class="fas fa-trash" />
+          </button>
+        </div>
+      </div>
+
       <div class="text-gray-600">
         <span>ID </span>
         <span>{{ task.number }}</span>
@@ -44,7 +68,7 @@
       </div>
       <div>
         <div class="mb-1 font-bold">Assignees</div>
-        <div class="relative ml-2">
+        <div class="relative">
           <div
             v-if="showAssigneesSelector"
             class="fixed inset-0 cursor-pointer"
@@ -84,6 +108,8 @@
 </template>
 
 <script lang="ts">
+import { marked } from 'marked'
+
 import { defineComponent } from 'vue'
 import { mapStores } from 'pinia'
 import { mapState } from 'pinia'
@@ -96,12 +122,18 @@ export default defineComponent({
   components: { UsersSelector },
   data() {
     return {
+      editing: false,
       showAssigneesSelector: false,
     }
   },
   computed: {
     ...mapStores(useTasksStore, useProjectsStore),
     ...mapState(useTasksStore, ['task']),
+    descriptionMarkdown(): string {
+      if (!this.task) return ''
+
+      return marked(this.task.description)
+    },
     usersToAssign(): User[] {
       if (!this.projectsStore.project) return []
 
