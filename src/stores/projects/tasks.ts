@@ -53,7 +53,7 @@ export const useTasksStore = defineStore('tasks', {
           description: task.description,
           index: task.index,
           number: task.number,
-          stageId: task.stageId,
+          stageId: task.stage.id,
           title: task.title,
           createdAt: task.createdAt,
           updatedAt: task.updatedAt,
@@ -120,6 +120,39 @@ export const useTasksStore = defineStore('tasks', {
             description: this.task.description,
           })
         ).data
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
+    async addUserToTask(username: string): Promise<void> {
+      const projectsStore = useProjectsStore()
+
+      try {
+        if (!this.task || !projectsStore.project) return
+
+        const projectUser = projectsStore.project.users.find(
+          (pu) => pu.user.username === username
+        )
+        if (!projectUser) return
+
+        await api.put<void>(`/tasks/${this.task.id}/assignees`, {
+          username,
+        })
+
+        this.task.assignees.push(projectUser.user)
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
+    async removeUserFromTask(username: string): Promise<void> {
+      try {
+        if (!this.task) return
+
+        await api.delete<void>(`/tasks/${this.task.id}/assignees/${username}`)
+
+        this.task.assignees = this.task.assignees.filter(
+          (u) => u.username !== username
+        )
       } catch (e: unknown) {
         this.$toaster.error(e as string)
       }

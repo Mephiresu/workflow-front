@@ -1,3 +1,4 @@
+import { Stage } from './stage'
 import { User } from './user'
 
 export interface Task {
@@ -17,8 +18,8 @@ export interface FullTask {
   readonly index: number
   readonly title: string
   readonly description: string
-  readonly stageId: number
-  readonly assignees: User[]
+  readonly stage: Stage
+  assignees: User[]
   readonly createdAt: string
   readonly updatedAt: string
 }
