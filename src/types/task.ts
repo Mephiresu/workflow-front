@@ -17,7 +17,7 @@ export interface FullTask {
   readonly number: number
   readonly index: number
   readonly title: string
-  readonly description: string
+  description: string
   readonly stage: Stage
   assignees: User[]
   readonly createdAt: string

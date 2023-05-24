@@ -22,7 +22,8 @@
               >
             </div>
             <div class="text-gray-500">
-              {{ element.description }}
+              {{ element.description.slice(0, 80)
+              }}{{ element.description.length > 80 ? '...' : '' }}
             </div>
           </div>
         </template>

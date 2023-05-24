@@ -8,20 +8,18 @@
           v-if="editing"
           v-model="task.title"
           type="text"
-          class="w-full rounded border-none bg-gray-50 p-1 text-lg font-bold text-gray-800 outline-none hover:bg-gray-200 hover:ring-0 focus:ring-0 active:ring-0"
-          @change="save" />
+          class="w-full rounded border-none bg-gray-50 p-1 text-lg font-bold text-gray-800 outline-none hover:bg-gray-200 hover:ring-0 focus:ring-0 active:ring-0" />
         <div v-else class="w-full p-1 text-lg font-bold text-gray-800">
           {{ task.title }}
         </div>
       </div>
-      <div class="flex-1">
+      <div class="mt-2 h-full max-h-full flex-1 overflow-auto">
         <textarea
-          v-if="editing"
-          v-model="task.description"
-          class="h-full w-full rounded border-none bg-gray-50 p-1 text-gray-800 outline-none hover:bg-gray-200 hover:ring-0 focus:ring-0 active:ring-0"
-          @change="save" />
+          v-show="false"
+          ref="description"
+          class="w-full rounded border-none bg-gray-50 p-1 text-gray-800 outline-none hover:bg-gray-200 hover:ring-0 focus:ring-0 active:ring-0" />
         <div
-          v-else
+          v-if="!editing"
           class="prose prose-sm h-full w-full p-1 text-gray-800"
           v-html="descriptionMarkdown"></div>
       </div>
@@ -37,7 +35,7 @@
               'bg-purple-300 text-gray-500 hover:bg-purple-400 hover:text-gray-600 active:text-gray-700':
                 editing,
             }"
-            @click="editing = !editing">
+            @click="toggleEditing()">
             <i class="fas fa-pencil" />
           </button>
           <button
@@ -109,6 +107,8 @@
 
 <script lang="ts">
 import { marked } from 'marked'
+import EasyMDE from 'easymde'
+import 'easymde/dist/easymde.min.css'
 
 import { defineComponent } from 'vue'
 import { mapStores } from 'pinia'
@@ -117,6 +117,8 @@ import { useTasksStore } from '../../stores/projects/tasks'
 import UsersSelector from '../../components/UsersSelector.vue'
 import { useProjectsStore } from '../../stores/projects/projects'
 import { User } from '../../types/user'
+
+let easymde: EasyMDE
 
 export default defineComponent({
   components: { UsersSelector },
@@ -151,6 +153,42 @@ export default defineComponent({
     addUserToTask(username: string) {
       this.showAssigneesSelector = false
       this.tasksStore.addUserToTask(username)
+    },
+    toggleEditing() {
+      if (this.editing) {
+        this.disableEditing()
+        this.save()
+      } else {
+        this.enableEditing()
+      }
+    },
+    enableEditing() {
+      if (!this.task) return
+      if (this.editing) return
+
+      this.editing = true
+
+      easymde = new EasyMDE({
+        element: this.$refs.description as HTMLElement,
+        status: false,
+        toolbarTips: false,
+        forceSync: true,
+        previewClass: 'h-full',
+        hideIcons: ['guide', 'fullscreen', 'image', 'preview', 'side-by-side'],
+        showIcons: ['code', 'table'],
+      })
+      easymde.codemirror.on('change', () => {
+        if (!this.task) return
+
+        this.task.description = easymde.value()
+      })
+      easymde.value(this.task.description)
+    },
+    disableEditing() {
+      this.editing = false
+      easymde.toTextArea()
+      const el = this.$refs.description as HTMLElement
+      el.hidden = true
     },
   },
 })
