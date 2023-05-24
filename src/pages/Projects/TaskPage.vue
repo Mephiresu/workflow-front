@@ -50,10 +50,6 @@
         </div>
       </div>
 
-      <div class="text-gray-600">
-        <span>ID </span>
-        <span>{{ task.number }}</span>
-      </div>
       <div class="grid grid-cols-2 text-sm text-gray-800">
         <span class="font-bold">Stage: </span>
         <span>{{ task.stage.name }}</span>
@@ -67,6 +63,7 @@
       <div>
         <div class="mb-1 font-bold">Assignees</div>
         <div class="relative">
+          <div v-if="task.assignees.length === 0">No assignees yet</div>
           <div
             v-if="showAssigneesSelector"
             class="fixed inset-0 cursor-pointer"
