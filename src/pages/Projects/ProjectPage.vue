@@ -50,6 +50,7 @@ import { useProjectsStore } from '../../stores/projects/projects'
 import BoardSelector from '../../components/BoardSelector.vue'
 import ModalWindow from '../../components/ModalWindow.vue'
 import { mapState } from 'pinia'
+import { useTasksStore } from '../../stores/projects/tasks'
 
 export default defineComponent({
   components: { BoardSelector, ModalWindow },
@@ -59,12 +60,16 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapStores(useProjectsStore),
+    ...mapStores(useProjectsStore, useTasksStore),
     ...mapState(useProjectsStore, ['project', 'board']),
   },
   async mounted() {
     await this.projectsStore.loadProject(this.$route.params.projectId as string)
     await this.projectsStore.loadBoard(this.$route.query.board as string)
+
+    if (this.$route.query.task) {
+      await this.tasksStore.openTask(Number(this.$route.query.task))
+    }
   },
   methods: {
     switchBoard(boardId: number) {

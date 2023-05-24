@@ -16,11 +16,11 @@
         @change="save" />
     </div>
     <div class="mt-4 flex flex-row justify-between">
-      <AppButton variant="danger" @click="projectsStore.deleteTask(task!.id)"
+      <AppButton variant="danger" @click="tasksStore.deleteTask(task!.id)"
         >Delete</AppButton
       >
 
-      <AppButton variant="secondary" @click="projectsStore.closeTask()"
+      <AppButton variant="secondary" @click="tasksStore.closeTask()"
         >Close</AppButton
       >
     </div>
@@ -30,9 +30,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapStores } from 'pinia'
-import { useProjectsStore } from '../../stores/projects/projects'
 import { mapState } from 'pinia'
 import { Stage } from '../../types/stage'
+import { useTasksStore } from '../../stores/projects/tasks'
 
 export default defineComponent({
   data() {
@@ -41,12 +41,12 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapStores(useProjectsStore),
-    ...mapState(useProjectsStore, ['task']),
+    ...mapStores(useTasksStore),
+    ...mapState(useTasksStore, ['task']),
   },
   methods: {
     save() {
-      this.projectsStore.saveTask()
+      this.tasksStore.saveTask()
     },
   },
 })

@@ -14,7 +14,7 @@
         <template #item="{ element }">
           <div
             class="flex flex-col space-y-1 rounded-md bg-gray-50 p-2 shadow-sm hover:shadow-md"
-            @click="projectsStore.openTask(element.id)">
+            @click="tasksStore.openTask(element.id)">
             <div class="flex flex-row content-center space-x-2">
               <span class="text-gray-900"
                 >#{{ element.number }} [{{ element.index }}]
@@ -29,12 +29,12 @@
       </draggable>
       <div
         class="flex h-16 flex-col items-center justify-center space-y-1 rounded-md border-4 border-gray-300/50 p-2 font-bold text-gray-300/50 opacity-0 hover:border-gray-300 hover:text-gray-300 active:border-gray-400 active:text-gray-400 group-hover:opacity-100"
-        @click="projectsStore.createTask(stage.id)">
+        @click="tasksStore.createTask(stage.id)">
         <i class="fas fa-plus fa-2xl" />
       </div>
     </div>
 
-    <ModalWindow v-if="projectsStore.task" @close="projectsStore.closeTask()">
+    <ModalWindow v-if="tasksStore.task" @close="tasksStore.closeTask()">
       <TaskPage />
     </ModalWindow>
   </div>
@@ -49,6 +49,7 @@ import { Stage } from '../../types/stage'
 import draggable from 'vuedraggable'
 import ModalWindow from '../../components/ModalWindow.vue'
 import TaskPage from './TaskPage.vue'
+import { useTasksStore } from '../../stores/projects/tasks'
 
 export default defineComponent({
   components: { draggable, ModalWindow, TaskPage },
@@ -58,7 +59,7 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapStores(useProjectsStore),
+    ...mapStores(useProjectsStore, useTasksStore),
     ...mapState(useProjectsStore, ['board']),
   },
   watch: {
@@ -97,7 +98,7 @@ export default defineComponent({
 
       const toStageId = e.added ? stageId : undefined
 
-      await this.projectsStore.moveTask(taskId, toStageId, leadingTaskId)
+      await this.tasksStore.moveTask(taskId, toStageId, leadingTaskId)
     },
   },
 })
