@@ -77,6 +77,19 @@ export const useProjectsStore = defineStore('projects', {
         this.$toaster.error(e as string)
       }
     },
+    async update(data: { name?: string; description?: string }) {
+      try {
+        if (!this.project) return
+
+        const project = (
+          await api.patch<Project>(`/projects/${this.project.id}`, data)
+        ).data
+
+        this.project = project
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
     async createStage(data: { name: string }) {
       try {
         if (!this.project || !this.board) return

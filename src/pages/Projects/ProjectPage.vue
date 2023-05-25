@@ -18,13 +18,16 @@
       <div class="flex w-48 flex-row-reverse px-4">
         <RouterLink
           :to="
-            $route.name !== 'project-settings'
+            $route.name !== 'project-settings-project' &&
+            $route.name !== 'project-settings-board'
               ? `/projects/${project.id}/settings`
               : `/projects/${project.id}`
           "
           class="block rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 active:text-gray-600"
           :class="{
-            'bg-gray-100 text-gray-600': $route.name === 'project-settings',
+            'bg-gray-100 text-gray-600':
+              $route.name === 'project-settings-project' ||
+              $route.name === 'project-settings-board',
           }">
           <i class="fas fa-sliders fa-lg" />
         </RouterLink>
@@ -72,10 +75,10 @@ export default defineComponent({
     }
   },
   methods: {
-    switchBoard(boardId: number) {
+    async switchBoard(boardId: number) {
       this.showBoardsSelector = false
 
-      this.projectsStore.loadBoard(boardId.toString())
+      await this.projectsStore.loadBoard(boardId.toString())
     },
   },
 })

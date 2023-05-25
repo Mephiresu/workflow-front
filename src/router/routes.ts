@@ -15,6 +15,8 @@ import ProjectPage from '../pages/Projects/ProjectPage.vue'
 import ProjectSettingsPage from '../pages/Projects/ProjectSettingsPage.vue'
 import NewProjectPage from '../pages/Projects/NewProjectPage.vue'
 import BoardPage from '../pages/Projects/BoardPage.vue'
+import ProjectSettingsProjectPage from '../pages/Projects/ProjectSettingsProjectPage.vue'
+import ProjectSettingsBoardPage from '../pages/Projects/ProjectSettingsBoardPage.vue'
 
 export const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', redirect: '/projects' },
@@ -63,6 +65,19 @@ export const routes: RouteRecordRaw[] = [
         path: 'settings',
         name: 'project-settings',
         component: ProjectSettingsPage,
+        redirect: { name: 'project-settings-project' },
+        children: [
+          {
+            path: 'project',
+            name: 'project-settings-project',
+            component: ProjectSettingsProjectPage,
+          },
+          {
+            path: 'board',
+            name: 'project-settings-board',
+            component: ProjectSettingsBoardPage,
+          },
+        ],
       },
     ],
   },
