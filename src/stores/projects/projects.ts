@@ -120,5 +120,21 @@ export const useProjectsStore = defineStore('projects', {
         this.$toaster.error(e as string)
       }
     },
+    async moveStage(stageId: number, leadingStageId?: number) {
+      try {
+        if (!this.project || !this.board) return
+
+        const stage = (
+          await api.patch<Project>(
+            `/projects/${this.project.id}/boards/${this.board.id}/stages/${stageId}/move`,
+            {
+              leadingStageId,
+            }
+          )
+        ).data
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
   },
 })

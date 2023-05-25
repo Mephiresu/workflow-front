@@ -154,8 +154,16 @@ export default defineComponent({
       }
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    handleStageReorder(e: any) {
+    async handleStageReorder(e: any) {
       console.log(`from ${e.oldIndex} to ${e.newIndex}`)
+
+      if (!this.board) return
+
+      const stageId = this.board.stages[e.newIndex].id
+      const leadingStageId =
+        e.newIndex > 0 ? this.board.stages[e.newIndex - 1].id : undefined
+
+      await this.projectsStore.moveStage(stageId, leadingStageId)
     },
     createStage() {
       this.showCreateStageModal = false
