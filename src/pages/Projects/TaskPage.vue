@@ -30,6 +30,7 @@
         <div
           class="flex flex-row divide-x divide-gray-400 rounded border border-gray-400 text-gray-400">
           <button
+            title="Edit title and description"
             class="flex-1 p-1 hover:bg-gray-100 hover:text-gray-500 active:text-gray-600"
             :class="{
               'bg-purple-300 text-gray-500 hover:bg-purple-400 hover:text-gray-600 active:text-gray-700':
@@ -39,10 +40,15 @@
             <i class="fas fa-pencil" />
           </button>
           <button
-            class="flex-1 p-1 hover:bg-gray-100 hover:text-gray-500 active:text-gray-600">
-            <i class="fas fa-tag" />
+            title="Copy task link"
+            class="flex-1 p-1 hover:bg-gray-100 hover:text-gray-500 active:text-gray-600"
+            :class="{ 'text-green-500 hover:text-green-600': copied }"
+            @click="copyLink()">
+            <i v-if="!copied" class="fas fa-link" />
+            <i v-else class="fas fa-check" />
           </button>
           <button
+            title="Delete task"
             class="flex-1 p-1 hover:bg-gray-100 hover:text-red-500 active:text-red-600"
             @click="tasksStore.deleteTask(task!.id)">
             <i class="fas fa-trash" />
@@ -92,7 +98,7 @@
             class="group flex cursor-pointer flex-row items-center justify-center px-2 py-1 hover:bg-gray-200"
             @click="showAssigneesSelector = true">
             <div
-              class="h-6 w-6 rounded text-center text-transparent transition-colors hover:text-gray-500 group-hover:text-gray-400">
+              class="h-6 w-6 rounded text-center text-gray-300 transition-colors hover:text-gray-500 group-hover:text-gray-400">
               <i class="fas fa-plus fa-sm" />
             </div>
           </div>
@@ -123,6 +129,7 @@ export default defineComponent({
     return {
       editing: false,
       showAssigneesSelector: false,
+      copied: false,
     }
   },
   computed: {
@@ -186,6 +193,11 @@ export default defineComponent({
       easymde.toTextArea()
       const el = this.$refs.description as HTMLElement
       el.hidden = true
+    },
+    copyLink() {
+      navigator.clipboard.writeText(window.location.href)
+      this.copied = true
+      setTimeout(() => (this.copied = false), 2000)
     },
   },
 })
