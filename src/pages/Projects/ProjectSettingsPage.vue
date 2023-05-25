@@ -2,10 +2,6 @@
   <div class="flex w-full flex-col p-8">
     <SavePanel v-if="isModified" @save="save" @revert="reset" />
 
-    <div class="mb-6">
-      <AppButton variant="danger" @click="deleteProject">Delete</AppButton>
-    </div>
-
     <div class="mb-4 max-w-xl flex-1">
       <form class="w-full" @change="change" @submit.prevent="">
         <div class="grid grid-cols-[1fr_3fr] items-center gap-4">
@@ -50,6 +46,14 @@
           </template>
         </draggable>
       </div>
+    </div>
+
+    <div class="mt-6">
+      <div class="col-span-2 mb-4 font-bold">Danger zone</div>
+
+      <AppButton variant="danger" @click="deleteProject">
+        Delete project
+      </AppButton>
     </div>
 
     <ModalWindow
