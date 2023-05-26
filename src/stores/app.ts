@@ -66,5 +66,28 @@ export const useAppStore = defineStore('app', {
         this.createdInstance.administrator.password
       )
     },
+
+    async updateInstance(
+      name: string,
+      administratorEmail: string
+    ): Promise<void> {
+      try {
+        const updated = (
+          await api.patch<Instance>('/instance', {
+            name,
+            administratorEmail,
+          })
+        ).data
+
+        this.name = updated.name
+        this.administratorEmail = updated.administratorEmail
+      } catch (error: unknown) {
+        if (error instanceof ApiError) {
+          this.$toaster.error(error.message)
+        }
+
+        this.$toaster.error('Unknown error')
+      }
+    },
   },
 })

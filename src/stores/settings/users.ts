@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { User } from '../../types/user'
 import { api } from '../../api'
+import { CreateUserResponse } from '../../types/create-user-response'
 export const useUsersSettingsStore = defineStore('usersSettings', {
   state: () => ({
     users: [] as User[],
+    user: undefined as User | undefined,
   }),
   actions: {
     async load() {
@@ -15,45 +17,58 @@ export const useUsersSettingsStore = defineStore('usersSettings', {
         this.$toaster.error(e as string)
       }
     },
-    async getUser(username: string) {
+    async loadUser(username: string) {
       try {
-        return (await api.get<User>(`/users/${username}`)).data
+        const user = (await api.get<User>(`/users/${username}`)).data
+
+        this.user = user
       } catch (e: unknown) {
         this.$toaster.error(e as string)
         this.$router.push({ name: 'settings' })
       }
     },
-    async updateUser(user: User, changed: boolean) {
+    async updateUser(data: { email: string; fullName: string }) {
       try {
-        const url = `/users/${user.username}`
+        if (!this.user) return
 
-        if (changed) {
-          await api.put(url, user)
-        } else {
-          return
-        }
+        const updated = (
+          await api.patch<User>(`/users/${this.user.username}`, {
+            email: data.email,
+            fullName: data.fullName,
+          })
+        ).data
+
+        this.user = updated
       } catch (e: unknown) {
         this.$toaster.error(e as string)
       }
     },
     async create(data: { fullName: string; email: string; username: string }) {
       try {
-        const user = (
-          await api.post<User>('/users/', {
+        const created = (
+          await api.post<CreateUserResponse>('/users/', {
             username: data.username,
             email: data.email,
             fullName: data.fullName,
           })
         ).data
 
-        this.$router.push({ name: 'user', params: { userName: user.username } })
+        this.users.push(created)
+
+        return created
       } catch (e: unknown) {
         this.$toaster.error(e as string)
       }
     },
-    async delete(username: string) {
+    async delete() {
       try {
-        await api.delete(`/users/${username}`)
+        if (!this.user) return
+
+        await api.delete(`/users/${this.user.username}`)
+
+        this.users = this.users.filter(
+          (u) => u.username !== this.user?.username
+        )
 
         this.$router.push({ name: 'users' })
       } catch (e: unknown) {
