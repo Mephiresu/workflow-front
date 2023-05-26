@@ -2,7 +2,7 @@
   <div class="flex-1">
     <SavePanel v-if="isModified" @save="save" @revert="reset" />
 
-    <form class="w-full" @change="change">
+    <form class="w-full" @input="change" @submit.prevent="save">
       <div class="grid grid-cols-[1fr_3fr] items-center gap-4">
         <div class="col-span-2 font-bold">Instance</div>
         <label class="">Name</label>
@@ -10,6 +10,8 @@
 
         <label class="">Administrator Email</label>
         <TextBox v-model="form.administratorEmail" />
+
+        <AppButton type="submit" class="hidden">SUBMIT</AppButton>
       </div>
     </form>
   </div>
@@ -41,9 +43,13 @@ export default defineComponent({
     change() {
       this.isModified = true
     },
-    save() {
-      console.log(this.form)
+    async save() {
       this.isModified = false
+
+      await this.appStore.updateInstance(
+        this.form.instanceName,
+        this.form.administratorEmail
+      )
     },
     reset() {
       Object.assign(this.form, {
