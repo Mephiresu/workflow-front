@@ -1,7 +1,6 @@
 <template>
   <div
     class="flex w-full flex-col items-stretch rounded border border-gray-300 bg-white p-2 shadow-lg">
-    <div class="mb-2 text-center">Select role</div>
     <div v-if="roles.length === 0" class="text-center text-gray-500">
       No options available
     </div>

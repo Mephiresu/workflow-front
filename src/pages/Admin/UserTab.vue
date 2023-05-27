@@ -27,8 +27,8 @@
             <div
               class="flex w-fit cursor-pointer flex-row items-center rounded bg-gray-100 py-2 px-4 text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-800 active:shadow"
               @click="showRolesSelector = true">
-              <i class="fas fa-pencil mr-2" />
               {{ usersSettingsStore.user?.roleName }}
+              <i class="fas fa-xs fa-chevron-down ml-2" />
             </div>
             <div
               v-if="showRolesSelector"

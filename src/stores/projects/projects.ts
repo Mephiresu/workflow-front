@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { api } from '../../api'
 import { Project } from '../../types/project'
 import { BoardFull } from '../../types/board'
+import { ProjectUserResponse } from '../../types/project-user'
 
 export const useProjectsStore = defineStore('projects', {
   state: () => ({
@@ -132,6 +133,64 @@ export const useProjectsStore = defineStore('projects', {
             }
           )
         ).data
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
+    async addUserToProject(username: string) {
+      if (!this.project) return
+
+      try {
+        const projectUser = (
+          await api.put<ProjectUserResponse>(
+            `/projects/${this.project.id}/users`,
+            {
+              username,
+            }
+          )
+        ).data
+
+        this.project.users.push(projectUser.users)
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
+    async changeUserRole(username: string, roleName: string) {
+      if (!this.project) return
+
+      try {
+        const projectUser = (
+          await api.patch<ProjectUserResponse>(
+            `/projects/${this.project.id}/users/${username}`,
+            {
+              roleName,
+            }
+          )
+        ).data
+
+        const user = this.project.users.find(
+          (u) => u.user.username === username
+        )
+        if (!user) return
+
+        user.role = projectUser.users.role
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
+    async deleteUserFromProject(username: string) {
+      if (!this.project) return
+
+      try {
+        const projectUser = (
+          await api.delete<ProjectUserResponse>(
+            `/projects/${this.project.id}/users/${username}`
+          )
+        ).data
+
+        this.project.users = this.project.users.filter(
+          (u) => u.user.username !== username
+        )
       } catch (e: unknown) {
         this.$toaster.error(e as string)
       }

@@ -39,7 +39,7 @@ export const useTasksStore = defineStore('tasks', {
 
         const task = (
           await api.post<FullTask>(`/tasks`, {
-            title: '',
+            title: 'New task',
             stageId,
             boardId: projectsStore.board.id,
             projectId: projectsStore.project.id,

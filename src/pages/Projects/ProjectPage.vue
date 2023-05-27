@@ -19,7 +19,8 @@
         <RouterLink
           :to="
             $route.name !== 'project-settings-project' &&
-            $route.name !== 'project-settings-board'
+            $route.name !== 'project-settings-board' &&
+            $route.name !== 'project-settings-users'
               ? `/projects/${project.id}/settings`
               : `/projects/${project.id}`
           "
@@ -27,7 +28,8 @@
           :class="{
             'bg-gray-100 text-gray-600':
               $route.name === 'project-settings-project' ||
-              $route.name === 'project-settings-board',
+              $route.name === 'project-settings-board' ||
+              $route.name === 'project-settings-users',
           }">
           <i class="fas fa-sliders fa-lg" />
         </RouterLink>
