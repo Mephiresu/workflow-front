@@ -17,21 +17,33 @@
 </template>
 
 <script lang="ts">
+import { mapStores } from 'pinia'
 import { defineComponent } from 'vue'
+import { useAuthStore } from '../../stores/auth'
 
 export default defineComponent({
   data() {
-    return {
-      menu: [
+    return {}
+  },
+  computed: {
+    ...mapStores(useAuthStore),
+    menu() {
+      return [
         { title: 'Instance', icon: 'house', path: '/settings/instance' },
-        { title: 'Users', icon: 'users', path: '/settings/users' },
-        {
-          title: 'Roles',
-          icon: 'hammer',
-          path: '/settings/roles',
-        },
-      ],
-    }
+        ...(this.authStore.hasPermission('users:read')
+          ? [{ title: 'Users', icon: 'users', path: '/settings/users' }]
+          : []),
+        ...(this.authStore.hasPermission('roles:read')
+          ? [
+              {
+                title: 'Roles',
+                icon: 'hammer',
+                path: '/settings/roles',
+              },
+            ]
+          : []),
+      ]
+    },
   },
 })
 </script>

@@ -32,7 +32,10 @@
       </div>
     </ModalWindow>
     <div class="mb-4">
-      <AppButton class="w-32" @click="showCreateRoleModal = true"
+      <AppButton
+        v-if="authStore.hasPermission('roles:create')"
+        class="w-32"
+        @click="showCreateRoleModal = true"
         >New role</AppButton
       >
     </div>
@@ -64,6 +67,7 @@ import { defineComponent } from 'vue'
 
 import { useRolesSettingsStore } from '../../stores/settings/roles'
 import ModalWindow from '../../components/ModalWindow.vue'
+import { useAuthStore } from '../../stores/auth'
 
 export default defineComponent({
   components: { ModalWindow },
@@ -75,7 +79,7 @@ export default defineComponent({
     },
   }),
   computed: {
-    ...mapStores(useRolesSettingsStore),
+    ...mapStores(useRolesSettingsStore, useAuthStore),
   },
   async mounted() {
     await this.rolesSettingsStore.load()

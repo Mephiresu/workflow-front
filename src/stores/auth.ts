@@ -22,6 +22,9 @@ export const useAuthStore = defineStore('auth', {
     },
   },
   actions: {
+    hasPermission(permission: string): boolean {
+      return !!this.user && this.user.permissions.includes(permission)
+    },
     async load() {
       try {
         if (!this.token) {
