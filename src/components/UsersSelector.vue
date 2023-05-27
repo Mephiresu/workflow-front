@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex w-full flex-col items-stretch rounded border border-gray-300 bg-white p-2 shadow-lg">
+    class="flex flex-col items-stretch rounded border border-gray-300 bg-white p-2 shadow-lg">
     <div class="mb-2 text-center">Add users</div>
     <div v-if="users.length === 0" class="text-center text-gray-500">
       No options available

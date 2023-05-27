@@ -58,7 +58,10 @@
     </ModalWindow>
 
     <div>
-      <AppButton class="mb-4 w-32" @click="showCreateUserModal = true">
+      <AppButton
+        v-if="authStore.hasPermission('users:create')"
+        class="mb-4 w-32"
+        @click="showCreateUserModal = true">
         New user
       </AppButton>
     </div>
@@ -71,10 +74,14 @@
         <div class="flex flex-col items-start justify-start">
           <span class="font-bold text-gray-800">
             {{ user.username }}
+            <span class="text-sm font-normal text-gray-600">{{
+              user.roleName
+            }}</span>
           </span>
           <span class="text-sm text-gray-700">
             {{ user.fullName }} {{ user.email }}
           </span>
+          <span class="text-sm text-gray-700"> </span>
         </div>
       </div>
     </div>
@@ -88,6 +95,7 @@ import { useUsersSettingsStore } from '../../stores/settings/users'
 
 import ModalWindow from '../../components/ModalWindow.vue'
 import { CreateUserResponse } from '../../types/create-user-response'
+import { useAuthStore } from '../../stores/auth'
 
 export default defineComponent({
   components: { ModalWindow },
@@ -101,7 +109,7 @@ export default defineComponent({
     createdUser: undefined as CreateUserResponse | undefined,
   }),
   computed: {
-    ...mapStores(useUsersSettingsStore),
+    ...mapStores(useUsersSettingsStore, useAuthStore),
   },
   async mounted() {
     await this.usersSettingsStore.load()

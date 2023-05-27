@@ -10,7 +10,9 @@
       <AppButton
         variant="secondary"
         class="ml-auto"
-        :disabled="role?.isImmutable"
+        :disabled="
+          role?.isImmutable || !authStore.hasPermission('roles:delete')
+        "
         @click="deleteRole"
         >Delete</AppButton
       >
@@ -35,7 +37,9 @@
             <span>
               <CheckBox
                 :model-value="permission.enabled"
-                :disabled="role?.isImmutable" />
+                :disabled="
+                  role?.isImmutable || !authStore.hasPermission('roles:update')
+                " />
             </span>
           </div>
         </div>
@@ -51,6 +55,7 @@ import { defineComponent } from 'vue'
 import { useRolesSettingsStore } from '../../stores/settings/roles'
 import { Role } from '../../types/role'
 import { Permission } from '../../types/permission'
+import { useAuthStore } from '../../stores/auth'
 
 interface PermissionGroup {
   readonly name: string
@@ -64,7 +69,7 @@ export default defineComponent({
     groups: [] as PermissionGroup[],
   }),
   computed: {
-    ...mapStores(useRolesSettingsStore),
+    ...mapStores(useRolesSettingsStore, useAuthStore),
   },
   async mounted() {
     const data = await this.rolesSettingsStore.getRoleWithPermissions(
@@ -99,7 +104,11 @@ export default defineComponent({
       return value.charAt(0).toUpperCase() + value.slice(1)
     },
     async togglePermission(permission: Permission) {
-      if (!this.role || this.role.isImmutable) {
+      if (
+        !this.role ||
+        this.role.isImmutable ||
+        !this.authStore.hasPermission('roles:update')
+      ) {
         return
       }
 

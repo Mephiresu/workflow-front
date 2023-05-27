@@ -6,10 +6,14 @@
       <div class="grid grid-cols-[1fr_3fr] items-center gap-4">
         <div class="col-span-2 font-bold">Instance</div>
         <label class="">Name</label>
-        <TextBox v-model="form.instanceName" />
+        <TextBox
+          v-model="form.instanceName"
+          :disabled="!authStore.hasPermission('instance:update')" />
 
         <label class="">Administrator Email</label>
-        <TextBox v-model="form.administratorEmail" />
+        <TextBox
+          v-model="form.administratorEmail"
+          :disabled="!authStore.hasPermission('instance:update')" />
 
         <AppButton type="submit" class="hidden">SUBMIT</AppButton>
       </div>
@@ -23,6 +27,7 @@ import TextBox from '../../_lib/TextBox.vue'
 import { mapStores } from 'pinia'
 import { useAppStore } from '../../stores/app'
 import SavePanel from '../../components/SavePanel.vue'
+import { useAuthStore } from '../../stores/auth'
 
 export default defineComponent({
   components: { TextBox, SavePanel },
@@ -34,7 +39,7 @@ export default defineComponent({
     isModified: false,
   }),
   computed: {
-    ...mapStores(useAppStore),
+    ...mapStores(useAppStore, useAuthStore),
   },
   mounted() {
     this.reset()

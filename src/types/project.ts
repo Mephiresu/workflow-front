@@ -3,8 +3,8 @@ import { Role } from './role'
 import { User } from './user'
 
 export interface ProjectUsers {
-  readonly user: User
-  readonly role: Role
+  user: User
+  role: Role
 }
 
 export interface Project {

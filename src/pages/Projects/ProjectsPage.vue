@@ -3,7 +3,7 @@
     <h1 class="mb-4 text-3xl font-bold">Projects</h1>
     <div class="max-w-md flex-1">
       <div class="space-y-2">
-        <NewProjectCard />
+        <NewProjectCard v-if="authStore.hasPermission('projects:create')" />
         <ProjectCard
           v-for="project in projectsStore.projects"
           :key="project.id"
@@ -20,6 +20,7 @@ import { useProjectsStore } from '../../stores/projects/projects'
 
 import ProjectCard from '../../components/ProjectCard.vue'
 import NewProjectCard from '../../components/NewProjectCard.vue'
+import { useAuthStore } from '../../stores/auth'
 
 export default defineComponent({
   components: {
@@ -30,7 +31,7 @@ export default defineComponent({
     return {}
   },
   computed: {
-    ...mapStores(useProjectsStore),
+    ...mapStores(useProjectsStore, useAuthStore),
   },
   async mounted() {
     await this.projectsStore.loadProjects()

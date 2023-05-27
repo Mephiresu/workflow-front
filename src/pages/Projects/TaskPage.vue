@@ -76,7 +76,7 @@
             @click="showAssigneesSelector = false"></div>
           <UsersSelector
             v-if="projectsStore.project && showAssigneesSelector"
-            class="absolute z-50"
+            class="absolute z-50 w-full"
             :users="usersToAssign"
             @selected="(username: string) => addUserToTask(username)" />
 

@@ -7,6 +7,14 @@ export const useRolesSettingsStore = defineStore('rolesSettings', {
   state: () => ({
     roles: [] as Role[],
   }),
+  getters: {
+    localRoles(): Role[] {
+      return this.roles.filter((r) => !r.isGlobal)
+    },
+    globalRoles(): Role[] {
+      return this.roles.filter((r) => r.isGlobal)
+    },
+  },
   actions: {
     async load() {
       try {
