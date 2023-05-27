@@ -22,6 +22,29 @@
           <label class="">Full name</label>
           <TextBox v-model="form.fullName" />
 
+          <label class="">Role</label>
+          <div class="relative">
+            <div
+              class="flex w-fit cursor-pointer flex-row items-center rounded bg-gray-100 py-2 px-4 text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-800 active:shadow"
+              @click="showRolesSelector = true">
+              <i class="fas fa-pencil mr-2" />
+              {{ usersSettingsStore.user?.roleName }}
+            </div>
+            <div
+              v-if="showRolesSelector"
+              class="fixed inset-0"
+              @click="showRolesSelector = false"></div>
+            <RolesSelector
+              v-if="showRolesSelector"
+              class="absolute z-50 w-1/2"
+              :roles="
+                rolesSettingsStore.globalRoles.filter(
+                  (r) => r.name !== usersSettingsStore.user?.roleName
+                )
+              "
+              @selected="updateUserRole" />
+          </div>
+
           <AppButton type="submit" class="hidden">SUBMIT</AppButton>
         </div>
       </form>
@@ -42,10 +65,13 @@ import { mapStores } from 'pinia'
 import { defineComponent } from 'vue'
 import { useUsersSettingsStore } from '../../stores/settings/users'
 import SavePanel from '../../components/SavePanel.vue'
+import RolesSelector from '../../components/RolesSelector.vue'
+import { useRolesSettingsStore } from '../../stores/settings/roles'
 
 export default defineComponent({
   components: {
     SavePanel,
+    RolesSelector,
   },
   data: () => ({
     form: {
@@ -53,15 +79,17 @@ export default defineComponent({
       fullName: '',
     },
     isModified: false,
+    showRolesSelector: false,
   }),
   computed: {
-    ...mapStores(useUsersSettingsStore),
+    ...mapStores(useUsersSettingsStore, useRolesSettingsStore),
   },
   async mounted() {
     await this.usersSettingsStore.loadUser(
       this.$route.params.username as string
     )
     this.reset()
+    await this.rolesSettingsStore.load()
   },
   methods: {
     change() {
@@ -84,6 +112,10 @@ export default defineComponent({
     },
     async deleteUser() {
       await this.usersSettingsStore.delete()
+    },
+    async updateUserRole(roleName: string) {
+      this.showRolesSelector = false
+      await this.usersSettingsStore.updateUserRole({ roleName })
     },
   },
 })

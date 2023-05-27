@@ -43,6 +43,21 @@ export const useUsersSettingsStore = defineStore('usersSettings', {
         this.$toaster.error(e as string)
       }
     },
+    async updateUserRole(data: { roleName: string }) {
+      try {
+        if (!this.user) return
+
+        const updated = (
+          await api.patch<User>(`/users/${this.user.username}/role`, {
+            roleName: data.roleName,
+          })
+        ).data
+
+        this.user.roleName = data.roleName
+      } catch (e: unknown) {
+        this.$toaster.error(e as string)
+      }
+    },
     async create(data: { fullName: string; email: string; username: string }) {
       try {
         const created = (

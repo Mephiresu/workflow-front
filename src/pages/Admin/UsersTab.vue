@@ -71,10 +71,14 @@
         <div class="flex flex-col items-start justify-start">
           <span class="font-bold text-gray-800">
             {{ user.username }}
+            <span class="text-sm font-normal text-gray-600">{{
+              user.roleName
+            }}</span>
           </span>
           <span class="text-sm text-gray-700">
             {{ user.fullName }} {{ user.email }}
           </span>
+          <span class="text-sm text-gray-700"> </span>
         </div>
       </div>
     </div>
